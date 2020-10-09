@@ -1,32 +1,40 @@
-# 2D Portal
+# Health Application
 
 ## Task 2 
 
 ***What will the application do?***
 
-The Portal first person puzzle game was originally released in 2007 with a sequel released in 2011.
-At the core of the game, the player is tasked with completing puzzle utilizing teleportation enabled by
-two linked portals. A 2D platformer version of this game would aim to adhere to the underlying principals
-and gameplay mechanics, but in a 2D format.
-
-The properties of the portals can be summarized below:
+The health application will assist users in achieving their health related goals. It will keep track of
+the foods consumed, and the physical activities performed during the day of the user. Based off of that information the
+application will calculate the amount of calories the person has expended/consumed. A summary of how the app will run
+is given below.
  
-Properties of portals:
-- Portals are intialized when its corresponding projectile contacts a surface.
-- Portals therefore cannot be created through another portal.
-- Teleportation between the two portals are instantaneous.
-- Momentum of the player is preserved when crossing between portals.
-- However, the players momentum is converted in the direction of the normal vector to the portal.
+How the app will run:
+- On Start, the app will ask users for their name, height, age, weight, gender and their goals.
+- The app will then calculate a recommended daily calorie intake required to reach their goals.
+- Users will then be able to add foods eaten to breakfast,lunch or snack categories.
+- Users will also be able to add the physical activities they performed.
 
 ***Who will use it?***
 
-Anyone who has an interest in puzzle games.
+People who want to make a healthy change in their lifestyle and want an application which can keep track
+of their progress and make sure they can stick to their goals. 
 
 ***Why is this project of interest to you?***
 
-The Portal series was one of the first games I ever played on my computer. I was fascinated by the concept
-of the portals but also the plot and story of the game itself. I am quite interested in game development
-and wanted to choose a project that would allow me to explore that path.
+Ever since COVID-19 I found that it has been increasingly difficult to achieve the same amount of physical activity in
+any given day compared to pre COVID times. This is in part due to the fact that classes have been moved online which 
+meant that I often found myself sitting at my desk for hours on end. By making a health app, I hope I can promote
+people to strive towards a healthier lifestyle even during times like this.
 
-## User Stories
+## Task 2 
+***User Stories***
+
+What the app should be able to do:
+- The user will be able to create an account by inputting their information.
+- The user will be able to add foods to breakfast, lunch or snacks.
+- The user will be able to add physical activities performed to the day.
+- The user will be able to edit and view the foods they have eaten, or the activities they performed in the given day.
+- The user will be able to edit their own account details or their health goals.
+- The user will be able to document any changes in their weight which will be stored as part of progress
 
