@@ -1,10 +1,10 @@
-# Health Application
+# Fitness Tracker
 
 ## Task 2 
 
 ***What will the application do?***
 
-The health application will assist users in achieving their health related goals. It will keep track of
+The fitness application will assist users in achieving their health related goals. It will keep track of
 the foods consumed, and the physical activities performed during the day of the user. Based off of that information the
 application will calculate the amount of calories the person has expended/consumed. A summary of how the app will run
 is given below.
@@ -37,4 +37,5 @@ What the app should be able to do:
 - The user will be able to edit and view the foods they have eaten, or the activities they performed in the given day.
 - The user will be able to edit their own account details or their health goals.
 - The user will be able to document any changes in their weight which will be stored as part of progress
+- The user will be able to view foods and exercises performed in previous days and view progress of weight loss.
 
