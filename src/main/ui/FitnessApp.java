@@ -1,6 +1,10 @@
 package ui;
 
-import model.*;
+import model.Calculator;
+import model.Exercise;
+import model.Food;
+import model.FoodTypes;
+import model.Person;
 
 import java.util.List;
 import java.util.Scanner;

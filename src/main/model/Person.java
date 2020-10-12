@@ -19,8 +19,6 @@ public class Person {
     //True represents male, false represents female
     private Boolean sex;
 
-    public int caloriesToday;
-
     //Goal weight and Daily Calories
     private double goalWeight;
     private double goalDays;
