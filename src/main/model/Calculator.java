@@ -9,15 +9,15 @@ import java.util.List;
 //https://www.healthline.com/nutrition/how-many-calories-per-day for calories to maintain weight
 public class Calculator {
 
-    public static final int MINIMUM_SAFE_CALORIES = 1200;
-    private static final int ONE_KG_FAT_CALORIES = 7000;
-    private static final int NORMAL_CALORIE_FOR_MALE = 2500;
-    private static final int NORMAL_CALORIE_FOR_FEMALE = 2000;
-    private static final int RECOMMENDED_DAILY_EXERCISE_TIME = 150;
-    private static final double RATIO_OF_VEGETABLES_AND_FRUITS = 0.25;
-    private static final double RATIO_OF_GRAINS = 0.5;
-    private static final double RATIO_OF_PROTEINS = 0.25;
-    private static final double MAX_AMOUNT_OF_OTHERS = 100;
+    public static final double MINIMUM_SAFE_CALORIES = 1200;
+    public static final double ONE_KG_FAT_CALORIES = 7000;
+    public static final double NORMAL_CALORIE_FOR_MALE = 2500;
+    public static final double NORMAL_CALORIE_FOR_FEMALE = 2000;
+    public static final double RECOMMENDED_DAILY_EXERCISE_TIME = 150;
+    public static final double RATIO_OF_VEGETABLES_AND_FRUITS = 0.25;
+    public static final double RATIO_OF_GRAINS = 0.5;
+    public static final double RATIO_OF_PROTEINS = 0.25;
+    public static final double MAX_AMOUNT_OF_OTHERS = 100;
 
     //REQUIRES: Person must have goal days > 0 and non negative inputs for start weight and goal weight
     //EFFECTS: calculates diet safety given minimum daily calorie and produces true if diet is safe false otherwise
@@ -25,8 +25,8 @@ public class Calculator {
         if (p.getGoalWeight() >= p.getStartWeight()) {
             return true;
         } else {
-            int calorieDeficit = ONE_KG_FAT_CALORIES * (p.getStartWeight() - p.getGoalWeight());
-            int dailyCalorie = calorieDeficit / p.getGoalDays();
+            double calorieDeficit = ONE_KG_FAT_CALORIES * (p.getStartWeight() - p.getGoalWeight());
+            double dailyCalorie = calorieDeficit / p.getGoalDays();
 
             if (p.getSex()) {
                 return ((NORMAL_CALORIE_FOR_MALE - dailyCalorie) >= MINIMUM_SAFE_CALORIES);
@@ -38,9 +38,9 @@ public class Calculator {
 
     //REQUIRES: Person must have goal days > 0 and non negative inputs for start weight and goal weight
     //EFFECTS: calculates the users daily allotted calories to achieve goal in timeframe set by user
-    public int calcDailyCal(Person p) {
-        int calorieDeficit = ONE_KG_FAT_CALORIES * (p.getStartWeight() - p.getGoalWeight());
-        int dailyCalorie = calorieDeficit / p.getGoalDays();
+    public Double calcDailyCal(Person p) {
+        double calorieDeficit = ONE_KG_FAT_CALORIES * (p.getStartWeight() - p.getGoalWeight());
+        double dailyCalorie = calorieDeficit / p.getGoalDays();
 
         if (p.getSex()) {
             return NORMAL_CALORIE_FOR_MALE - dailyCalorie;
@@ -52,7 +52,7 @@ public class Calculator {
     //EFFECTS: returns the equation in string form of goal calories - food + exercise = remaining calories
     public String makeEquation(Person person) {
         String equation = "";
-        String recCal = Integer.toString(person.getDailyRecCalories());
+        String recCal = Integer.toString((int) person.getDailyRecCalories());
         equation = equation.concat(recCal);
         equation = equation.concat("    -    ");
         String foodCalorie = Integer.toString(foodCalCalc(person));
@@ -61,7 +61,7 @@ public class Calculator {
         String exeCalorie = Integer.toString(exerciseCalCalc(person));
         equation = equation.concat(exeCalorie);
         equation = equation.concat("      =      ");
-        String remaining = Integer.toString((person.getDailyRecCalories() + exerciseCalCalc(person)
+        String remaining = Integer.toString((int) (person.getDailyRecCalories() + exerciseCalCalc(person)
                 - foodCalCalc(person)));
         equation = equation.concat(remaining);
         return equation;
@@ -80,7 +80,7 @@ public class Calculator {
                     + " minutes." + "\n You currently need " + (RECOMMENDED_DAILY_EXERCISE_TIME - exerciseTime)
                     + " more minutes of exercise, Good Luck!";
         } else {
-            return "You have meet the daily" + RECOMMENDED_DAILY_EXERCISE_TIME + " minutes of exercise, Great Job!";
+            return "You have meet the daily " + RECOMMENDED_DAILY_EXERCISE_TIME + " minutes of exercise, Great Job!";
         }
     }
 
@@ -97,7 +97,7 @@ public class Calculator {
                 grainsMass += f.getMass();
             } else if (f.getType() == FoodTypes.PROTEINS) {
                 proteinMass += f.getMass();
-            } else if (f.getType() == FoodTypes.OTHERS) {
+            } else {
                 othersMass += f.getMass();
             }
         }
@@ -113,7 +113,7 @@ public class Calculator {
     private String makeRecommendDiet(double grainsMass, double proteinMass, double vegAndFruitMass, double othersMass,
                                      double total) {
         String recommendations = advice();
-        if ((RATIO_OF_GRAINS + 0.1) >= (grainsMass / total) && (RATIO_OF_GRAINS - 0.1) <= grainsMass / total) {
+        if ((RATIO_OF_GRAINS + 0.1) >= grainsMass / total && (RATIO_OF_GRAINS - 0.1) <= grainsMass / total) {
             recommendations = recommendations.concat("\n Great balance of grains in diet! Keep it up!");
         } else {
             recommendations = recommendations.concat("\n your diet needs a balance of grains");

@@ -10,29 +10,20 @@ public class Food {
     private String name;
     private FoodTypes type;
     private int calories;
-    private int mass;
+    private double mass;
     private String timeOfDay;
-
-    public Food() {
-        this.name = "";
-        this.type = null;
-        this.calories = 0;
-        this.mass = 0;
-        this.timeOfDay = "";
-    }
-
 
     //EFFECTS: returns string that represents the foods type
     public String typeToString() {
         FoodTypes type = this.getType();
-        String s = null;
+        String s;
         if (type == FoodTypes.GRAINS) {
             s = "Grains";
         } else if (type == FoodTypes.PROTEINS) {
             s = "Proteins";
         } else if (type == FoodTypes.VEGETABLES_AND_FRUITS) {
             s = "Vegetables and Fruits";
-        } else if (type == FoodTypes.OTHERS) {
+        } else {
             s = "Others";
         }
         return s;
@@ -55,7 +46,7 @@ public class Food {
         return calories;
     }
 
-    public int getMass() {
+    public double getMass() {
         return mass;
     }
 
@@ -67,7 +58,7 @@ public class Food {
         this.calories = calories;
     }
 
-    public void setMass(int mass) {
+    public void setMass(double mass) {
         this.mass = mass;
     }
 

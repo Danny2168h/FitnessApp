@@ -452,15 +452,8 @@ public class FitnessApp {
             cmd = input.next();
             cmd = cmd.toLowerCase();
         }
-        if (cmd.equals("m")) {
-            person.setMale();
-            System.out.println("You have set your gender to: Male");
-            System.out.println();
-        } else {
-            person.setFemale();
-            System.out.println("You have set your gender to: Female");
-            System.out.println();
-        }
+        System.out.println(person.setProperSex(cmd));
+        System.out.println();
     }
 
     //MODIFIES: this
@@ -538,7 +531,7 @@ public class FitnessApp {
             cmd1 = input.nextInt();
             person.setGoalDays(cmd1);
         }
-        int cal = calc.calcDailyCal(person);
+        Double cal = calc.calcDailyCal(person);
         person.setDailyRecCalories(cal);
         System.out.println("Your daily calorie goal has been set to: " + cal + " calories.");
     }

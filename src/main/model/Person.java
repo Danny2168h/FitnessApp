@@ -13,18 +13,18 @@ public class Person {
 
     //Persons descriptors
     private String name;
-    private int age;
-    private int startWeight;
-    private int height;
+    private double age;
+    private double startWeight;
+    private double height;
     //True represents male, false represents female
     private Boolean sex;
 
     public int caloriesToday;
 
     //Goal weight and Daily Calories
-    private int goalWeight;
-    private int goalDays;
-    private int dailyRecCalories;
+    private double goalWeight;
+    private double goalDays;
+    private double dailyRecCalories;
 
     //Foods and exercises
     private List<Food> breakfast;
@@ -35,16 +35,6 @@ public class Person {
 
     //EFFECTS: Creates a new person instance with fields set to 0 and empty lists.
     public Person() {
-        this.name = "";
-        this.age = 0;
-        this.startWeight = 0;
-        this.height = 0;
-        this.sex = true;
-
-        this.caloriesToday = 0;
-
-        this.goalWeight = 0;
-        this.dailyRecCalories = 0;
 
         breakfast = new ArrayList<>();
         lunch = new ArrayList<>();
@@ -83,29 +73,41 @@ public class Person {
         exercises.add(e);
     }
 
+    //REQUIRES: String to be of "m" or "f"
+    //MODIFIES: this
+    //EFFECTS: based on input set
+    public String setProperSex(String cmd) {
+        if (cmd.equals("m")) {
+            this.setMale();
+            return "You have set your gender to: Male";
+        } else {
+            this.setFemale();
+            return "You have set your gender to: Female";
+        }
+    }
 
     //Setters
     public void setName(String str) {
         this.name = str;
     }
 
-    public void setHeight(int h) {
+    public void setHeight(double h) {
         this.height = h;
     }
 
-    public void setStartWeight(int w) {
+    public void setStartWeight(double w) {
         this.startWeight = w;
     }
 
-    public void setGoalWeight(int w) {
+    public void setGoalWeight(double w) {
         this.goalWeight = w;
     }
 
-    public void setGoalDays(int g) {
+    public void setGoalDays(double g) {
         this.goalDays = g;
     }
 
-    public void setAge(int age) {
+    public void setAge(double age) {
         this.age = age;
     }
 
@@ -117,7 +119,7 @@ public class Person {
         this.sex = true;
     }
 
-    public void setDailyRecCalories(int c) {
+    public void setDailyRecCalories(double c) {
         this.dailyRecCalories = c;
     }
 
@@ -126,31 +128,23 @@ public class Person {
         return name;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public int getStartWeight() {
+    public double getStartWeight() {
         return startWeight;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public Boolean getSex() {
         return sex;
     }
 
-    public int getGoalWeight() {
+    public double getGoalWeight() {
         return goalWeight;
     }
 
-    public int getGoalDays() {
+    public double getGoalDays() {
         return goalDays;
     }
 
-    public int getDailyRecCalories() {
+    public double getDailyRecCalories() {
         return dailyRecCalories;
     }
 
@@ -172,5 +166,13 @@ public class Person {
 
     public List<Exercise> getExercises() {
         return exercises;
+    }
+
+    public double getHeight() {
+        return this.height;
+    }
+
+    public double getAge() {
+        return this.age;
     }
 }
