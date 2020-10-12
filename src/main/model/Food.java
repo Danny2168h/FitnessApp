@@ -7,23 +7,45 @@ package model;
 
 public class Food {
 
-    private static String GRAINS = "Grains";
-    private static String PROTEINS = "Protein";
-    private static String VEGETABLE_FRUITS = "Vegetable and Fruits";
-    private static String OTHER = "Other";
-
+    private String name;
     private FoodTypes type;
     private int calories;
     private int mass;
+    private String timeOfDay;
 
-    public Food(FoodTypes type, int calories, int mass) {
-        this.type = type;
-        this.calories = calories;
-        this.mass = mass;
+    public Food() {
+        this.name = "";
+        this.type = null;
+        this.calories = 0;
+        this.mass = 0;
+        this.timeOfDay = "";
     }
+
+
+    //EFFECTS: Converts the FoodType of the food into a string
+    public String typeToString() {
+        FoodTypes type = this.getType();
+        String s = null;
+        if (type == FoodTypes.GRAINS) {
+            s = "Grains";
+        } else if (type == FoodTypes.PROTEINS) {
+            s = "Proteins";
+        } else if (type == FoodTypes.VEGETABLES_AND_FRUITS) {
+            s = "Vegetables and Fruits";
+        } else if (type == FoodTypes.OTHERS) {
+            s = "Others";
+        }
+        return s;
+    }
+
+    //Getters and Setters
 
     public FoodTypes getType() {
         return type;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getCalories() {
@@ -44,5 +66,17 @@ public class Food {
 
     public void setMass(int mass) {
         this.mass = mass;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setTimeOfDay(String time) {
+        this.timeOfDay = time;
+    }
+
+    public String getTimeOfDay() {
+        return this.timeOfDay;
     }
 }

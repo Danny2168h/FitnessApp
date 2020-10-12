@@ -4,7 +4,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-//does the calculations for the programs
+//Does the calculations and recommendation for the program
 //https://www.hsph.harvard.edu/nutritionsource/healthy-eating-plate/ source for ratios of food to eat
 //https://www.healthline.com/nutrition/how-many-calories-per-day for calories to maintain weight
 public class Calculator {
@@ -13,24 +13,21 @@ public class Calculator {
     private static final int ONE_KG_FAT_CALORIES = 7000;
     private static final int NORMAL_CALORIE_FOR_MALE = 2500;
     private static final int NORMAL_CALORIE_FOR_FEMALE = 2000;
-    private static final double RATIO_OF_VEGETABLES = 0.5;
+    private static final int RECOMMENDED_DAILY_EXERCISE_TIME = 150;
+    private static final double RATIO_OF_VEGETABLES_AND_FRUITS = 0.25;
     private static final double RATIO_OF_GRAINS = 0.5;
-    private static final double RATIO_OF_PROTEINS = 0.5;
+    private static final double RATIO_OF_PROTEINS = 0.25;
+    private static final double MAX_AMOUNT_OF_OTHERS = 100;
 
-
-    public Calculator() {
-    }
-
-    //REQUIRES: all integer inputs to be > 0
-    //EFFECTS: produces true if
-    public Boolean checkDietSafety(int goalWeight, int weight, int goalDays, boolean sex) {
-        if (goalWeight >= weight) {
+    //EFFECTS: produces true if diet is safe false otherwise
+    public Boolean checkDietSafety(Person p) {
+        if (p.getGoalWeight() >= p.getStartWeight()) {
             return true;
         } else {
-            int calorieDeficit = ONE_KG_FAT_CALORIES * (weight - goalWeight);
-            int dailyCalorie = calorieDeficit / goalDays;
+            int calorieDeficit = ONE_KG_FAT_CALORIES * (p.getStartWeight() - p.getGoalWeight());
+            int dailyCalorie = calorieDeficit / p.getGoalDays();
 
-            if (sex) {
+            if (p.getSex()) {
                 return ((NORMAL_CALORIE_FOR_MALE - dailyCalorie) >= MINIMUM_SAFE_CALORIES);
             } else {
                 return ((NORMAL_CALORIE_FOR_FEMALE - dailyCalorie) >= MINIMUM_SAFE_CALORIES);
@@ -38,32 +35,103 @@ public class Calculator {
         }
     }
 
-    public String recommendation(Person p) {
-        int grainsMass = 0;
-        int proteinMass = 0;
-        int vegAndFruitMass = 0;
-        int othersMass = 0;
+    public int calcDailyCal(Person p) {
+        int calorieDeficit = ONE_KG_FAT_CALORIES * (p.getStartWeight() - p.getGoalWeight());
+        int dailyCalorie = calorieDeficit / p.getGoalDays();
 
+        if (p.getSex()) {
+            return NORMAL_CALORIE_FOR_MALE - dailyCalorie;
+        } else {
+            return NORMAL_CALORIE_FOR_FEMALE - dailyCalorie;
+        }
+    }
+
+    public String makeEquation(Person person) {
+        String equation = "";
+        String recCal = Integer.toString(person.getDailyRecCalories());
+        equation = equation.concat(recCal);
+        equation = equation.concat("    -    ");
+        String foodCalorie = Integer.toString(foodCalCalc(person));
+        equation = equation.concat(foodCalorie);
+        equation = equation.concat("      +      ");
+        String exeCalorie = Integer.toString(exerciseCalCalc(person));
+        equation = equation.concat(exeCalorie);
+        equation = equation.concat("      =      ");
+        String remaining = Integer.toString((person.getDailyRecCalories() + exerciseCalCalc(person)
+                - foodCalCalc(person)));
+        equation = equation.concat(remaining);
+        return equation;
+    }
+
+    public String recommendExercise(Person p) {
+        int exerciseTime = 0;
+        List<Exercise> loe = p.getExercises();
+        for (Exercise e : loe) {
+            exerciseTime += e.getTime();
+        }
+
+        if (exerciseTime < RECOMMENDED_DAILY_EXERCISE_TIME) {
+            return "\nIt is recommended that you meet the daily exercise goal of " + RECOMMENDED_DAILY_EXERCISE_TIME
+                    + " minutes." + "\n You currently need " + (RECOMMENDED_DAILY_EXERCISE_TIME - exerciseTime)
+                    + " more minutes of exercise, Good Luck!";
+        } else {
+            return "You have meet the daily" + RECOMMENDED_DAILY_EXERCISE_TIME + " minutes of exercise, Great Job!";
+        }
+    }
+
+    public String recommendDiet(Person p) {
+        double grainsMass = 0;
+        double proteinMass = 0;
+        double vegAndFruitMass = 0;
+        double othersMass = 0;
         for (Food f : addAllFoods(p)) {
-            switch (f.getType()) {
-                case FRUITS:
-                    vegAndFruitMass += f.getMass();
-                    break;
-                case PROTEINS:
-                    proteinMass += f.getMass();
-                    break;
-                case VEGETABLES:
-                    vegAndFruitMass += f.getMass();
-                    break;
-                case GRAINS:
-                    grainsMass += f.getMass();
-                    break;
-                case OTHERS:
-                    othersMass += f.getMass();
-                    break;
+            if (f.getType() == FoodTypes.VEGETABLES_AND_FRUITS) {
+                vegAndFruitMass += f.getMass();
+            } else if (f.getType() == FoodTypes.GRAINS) {
+                grainsMass += f.getMass();
+            } else if (f.getType() == FoodTypes.PROTEINS) {
+                proteinMass += f.getMass();
+            } else if (f.getType() == FoodTypes.OTHERS) {
+                othersMass += f.getMass();
             }
         }
-        return "needs work";
+        double total = grainsMass + proteinMass + vegAndFruitMass;
+        if (total == 0) {
+            return "no data for diet recommendations";
+        }
+        return makeRecommendDiet(grainsMass, proteinMass, vegAndFruitMass, othersMass, total);
+    }
+
+    private String makeRecommendDiet(double grainsMass, double proteinMass, double vegAndFruitMass, double othersMass,
+                                     double total) {
+        String recommendations = advice();
+        if ((RATIO_OF_GRAINS + 0.1) >= (grainsMass / total) && (RATIO_OF_GRAINS - 0.1) <= grainsMass / total) {
+            recommendations = recommendations.concat("\n Great balance of grains in diet! Keep it up!");
+        } else {
+            recommendations = recommendations.concat("\n your diet needs a balance of grains");
+        }
+        if ((RATIO_OF_VEGETABLES_AND_FRUITS + 0.05) >= vegAndFruitMass / total && (RATIO_OF_VEGETABLES_AND_FRUITS
+                - 0.05) <= vegAndFruitMass / total) {
+            recommendations = recommendations.concat("\n Great balance of veggies and fruits in diet! Good job!");
+        } else {
+            recommendations = recommendations.concat("\n your diet needs to balance veggies and fruits diet");
+        }
+        if ((RATIO_OF_PROTEINS + 0.05) >= proteinMass / total && (RATIO_OF_PROTEINS - 0.05) <= proteinMass / total) {
+            recommendations = recommendations.concat("\n Great balance of proteins in diet! Great work!");
+        } else {
+            recommendations = recommendations.concat("\n your diet needs a better balance of protein");
+        }
+        if (othersMass >= MAX_AMOUNT_OF_OTHERS) {
+            recommendations = recommendations.concat("\n Please consider eating less foods in 'other' category");
+        } else {
+            recommendations = recommendations.concat("\n Great job on eating less than 150g of 'other' foods");
+        }
+        return recommendations;
+    }
+
+    private String advice() {
+        return "For a balanced diet, half of what you eat should be grains, a quarter should be proteins and another"
+                + " quarter should be fruits and veggies" + "\nBelow are a list of suggestions to improve your diet:";
     }
 
     private List<Food> addAllFoods(Person p) {
@@ -75,5 +143,23 @@ public class Calculator {
         allFoods.addAll(p.getSnacks());
 
         return allFoods;
+    }
+
+    private Integer exerciseCalCalc(Person p) {
+        int exerCals = 0;
+        for (Exercise pa : p.getExercises()) {
+            exerCals += pa.getCalories();
+        }
+        return exerCals;
+
+    }
+
+    private int foodCalCalc(Person person) {
+        int foodCals = 0;
+        List<Food> allFood = addAllFoods(person);
+        for (Food f : allFood) {
+            foodCals += f.getCalories();
+        }
+        return foodCals;
     }
 }

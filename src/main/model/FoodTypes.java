@@ -1,5 +1,5 @@
 package model;
 
 public enum FoodTypes {
-    GRAINS, PROTEINS, VEGETABLES, FRUITS, OTHERS
+    GRAINS, PROTEINS, VEGETABLES_AND_FRUITS, OTHERS
 }

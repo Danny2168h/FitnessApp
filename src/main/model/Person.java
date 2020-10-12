@@ -18,7 +18,8 @@ public class Person {
     private int height;
     //True represents male, false represents female
     private Boolean sex;
-    private List<String> medicalConditions;
+
+    public int caloriesToday;
 
     //Goal weight and Daily Calories
     private int goalWeight;
@@ -30,16 +31,17 @@ public class Person {
     private List<Food> lunch;
     private List<Food> dinner;
     private List<Food> snacks;
-    private List<PhysicalActivity> activities;
+    private List<Exercise> exercises;
 
     //EFFECTS: Creates a new person instance with fields set to 0 and empty lists.
-    public Person(String name) {
-        this.name = name;
+    public Person() {
+        this.name = "";
         this.age = 0;
         this.startWeight = 0;
         this.height = 0;
         this.sex = true;
-        medicalConditions = new ArrayList<>();
+
+        this.caloriesToday = 0;
 
         this.goalWeight = 0;
         this.dailyRecCalories = 0;
@@ -47,7 +49,28 @@ public class Person {
         breakfast = new ArrayList<>();
         lunch = new ArrayList<>();
         dinner = new ArrayList<>();
-        activities = new ArrayList<>();
+        snacks = new ArrayList<>();
+        exercises = new ArrayList<>();
+    }
+
+    public void addBreakfast(Food f) {
+        breakfast.add(f);
+    }
+
+    public void addLunch(Food f) {
+        lunch.add(f);
+    }
+
+    public void addDinner(Food f) {
+        dinner.add(f);
+    }
+
+    public void addSnacks(Food f) {
+        snacks.add(f);
+    }
+
+    public void addExercise(Exercise e) {
+        exercises.add(e);
     }
 
 
@@ -133,10 +156,6 @@ public class Person {
         return sex;
     }
 
-    public List<String> getMedicalConditions() {
-        return medicalConditions;
-    }
-
     public int getGoalWeight() {
         return goalWeight;
     }
@@ -165,7 +184,7 @@ public class Person {
         return snacks;
     }
 
-    public List<PhysicalActivity> getActivities() {
-        return activities;
+    public List<Exercise> getExercises() {
+        return exercises;
     }
 }
