@@ -53,84 +53,70 @@ public class Person {
         exercises = new ArrayList<>();
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds food item to breakfast
     public void addBreakfast(Food f) {
         breakfast.add(f);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds food item to lunch
     public void addLunch(Food f) {
         lunch.add(f);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds food item to dinner
     public void addDinner(Food f) {
         dinner.add(f);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds food item to snacks
     public void addSnacks(Food f) {
         snacks.add(f);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds exercise to exercises
     public void addExercise(Exercise e) {
         exercises.add(e);
     }
 
 
-    //REQUIRES: non-empty string
-    //MODIFIES: this
-    //EFFECTS: sets name to string input
+    //Setters
     public void setName(String str) {
         this.name = str;
     }
 
-    //REQUIRES: weight > 0
-    //MODIFIES: this
-    //EFFECTS: sets weight to input
     public void setHeight(int h) {
         this.height = h;
     }
 
-    //REQUIRES: weight > 0
-    //MODIFIES: this
-    //EFFECTS: sets weight to input
     public void setStartWeight(int w) {
         this.startWeight = w;
     }
 
-    //REQUIRES: weight > 0
-    //MODIFIES: this
-    //EFFECTS: sets goal weight to input
     public void setGoalWeight(int w) {
         this.goalWeight = w;
     }
 
-    //REQUIRES: Days > 0
-    //MODIFIES: this
-    //EFFECTS: sets goalDays to input
     public void setGoalDays(int g) {
         this.goalDays = g;
     }
 
-    //REQUIRES: age > 0
-    //MODIFIES: this
-    //EFFECTS: sets age to input
     public void setAge(int age) {
         this.age = age;
     }
 
-    //MODIFIES: this
-    //EFFECTS: sets sex to female
     public void setFemale() {
         this.sex = false;
     }
 
-    //MODIFIES: this
-    //EFFECTS: sets sex to male
     public void setMale() {
         this.sex = true;
     }
 
-    //REQUIRES: calories must be greater than 0
-    //MODIFIES: this
-    //EFFECTS: sets DailyRecCalories to input
     public void setDailyRecCalories(int c) {
         this.dailyRecCalories = c;
     }

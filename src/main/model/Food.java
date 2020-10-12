@@ -22,7 +22,7 @@ public class Food {
     }
 
 
-    //EFFECTS: Converts the FoodType of the food into a string
+    //EFFECTS: returns string that represents the foods type
     public String typeToString() {
         FoodTypes type = this.getType();
         String s = null;
@@ -39,13 +39,16 @@ public class Food {
     }
 
     //Getters and Setters
-
     public FoodTypes getType() {
         return type;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     public int getCalories() {
@@ -68,15 +71,11 @@ public class Food {
         this.mass = mass;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setTimeOfDay(String time) {
-        this.timeOfDay = time;
-    }
-
     public String getTimeOfDay() {
         return this.timeOfDay;
+    }
+
+    public void setTimeOfDay(String s) {
+        this.timeOfDay = s;
     }
 }

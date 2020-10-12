@@ -13,24 +13,22 @@ public class FitnessApp {
     private Food food;
     private Exercise exercise;
 
-    //EFFECTS: runs Fitness app application
+    //EFFECTS: runs Fitness app program
     public FitnessApp() {
         runFitnessApp();
     }
 
-    //MODIFIES: this
-    //EFFECTS: processes user inputs
     //source: from TellerApp example
+    //MODIFIES: this
+    //EFFECTS: processes user inputs and runs program
     private void runFitnessApp() {
-        String cmd = null;
-
         init();
         System.out.println();
         System.out.println("Welcome " + person.getName() + " to your Personalized Fitness Tracker!");
 
         while (true) {
             displayMenu();
-            cmd = input.next();
+            String cmd = input.next();
 
             if (cmd.equals("6")) {
                 break;
@@ -38,10 +36,11 @@ public class FitnessApp {
                 processCommand(cmd);
             }
         }
-
         System.out.println("\nGoodbye!");
     }
 
+
+    // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\n                MAIN MENU");
         System.out.println("Goal:       Food:       Exercise:      Remaining:");
@@ -55,19 +54,23 @@ public class FitnessApp {
         System.out.println("\t6 -> Quit");
     }
 
+    //MODIFIES: this
+    //EFFECTS: initializes fields and fills in persons account information
     private void init() {
         input = new Scanner(System.in);
         calc = new Calculator();
         person = new Person();
         System.out.println("\nWelcome to your new healthy lifestyle! \nBefore we begin we will need some of your info");
         setPersonSex();
-        //setPersonName();
-        // setPersonAge();
-        // setPersonHeight();
+        setPersonName();
+        setPersonAge();
+        setPersonHeight();
         setPersonWeight();
         setPersonGoal();
     }
 
+    //MODIFIES: this
+    //EFFECTS: processes user command
     private void processCommand(String cmd) {
         if (cmd.equals("1")) {
             doAddFood();
@@ -84,6 +87,8 @@ public class FitnessApp {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds a unique food to the specified meal time of the user
     private void doAddFood() {
         food = new Food();
         System.out.println("\nADDING FOOD");
@@ -95,6 +100,8 @@ public class FitnessApp {
         System.out.println(food.getName() + " has been successfully added to " + food.getTimeOfDay());
     }
 
+    //MODIFIES: this
+    //EFFECTS: Sets name of food to user input
     private void addFoodName() {
         System.out.println("\nENTER NAME OF FOOD:");
         String cmd = input.next();
@@ -102,7 +109,52 @@ public class FitnessApp {
         System.out.println("Food name has been set to " + cmd);
     }
 
+    //MODIFIES: this
+    //EFFECTS: displays menu for food categories and checks for invalid inputs
+    private void addFoodType() {
+        boolean run = true;
+        while (run) {
+            System.out.println("\nSelect one of the food categories:");
+            System.out.println("\t1 -> Vegetables and Fruits");
+            System.out.println("\t2 -> Protein");
+            System.out.println("\t3 -> Grains");
+            System.out.println("\t4 -> Others");
 
+            String cmd = input.next();
+            if (cmd.equals("1") || cmd.equals("2") || cmd.equals("3") || cmd.equals("4")) {
+                System.out.println(processFoodType(cmd));
+                run = false;
+            } else {
+                System.out.println("Selection invalid...");
+            }
+        }
+    }
+
+    //REQUIRES: command = "1" or "2" or "3" or "4"
+    //MODIFIES: this
+    //EFFECTS: processes user input for FoodTypes, sets food to be of that type and returns a string displaying which
+    //category was selected
+    private String processFoodType(String cmd) {
+        String select = "";
+        if (cmd.equals("1")) {
+            food.setType(FoodTypes.VEGETABLES_AND_FRUITS);
+            select = "Selected Vegetables and Fruits";
+        } else if (cmd.equals("2")) {
+            food.setType(FoodTypes.PROTEINS);
+            select = "Selected Protein";
+        } else if (cmd.equals("3")) {
+            food.setType(FoodTypes.GRAINS);
+            select = "Selected Grains";
+        } else if (cmd.equals("4")) {
+            food.setType(FoodTypes.OTHERS);
+            select = "Selected Others";
+        }
+        return select;
+    }
+
+    //REQUIRES: User input must be an integer value
+    //MODIFIES: this
+    //EFFECTS: sets calories of food only if user inputted calories is > 0
     private void addFoodCal() {
         System.out.println("\nENTER CALORIC VALUE OF FOOD:");
         int cmd = input.nextInt();
@@ -114,8 +166,23 @@ public class FitnessApp {
         System.out.println("Food calorie has been set to " + cmd + "cal");
     }
 
+    //REQUIRES: An integer input
+    //MODIFIES: this
+    //EFFECTS: Sets food mass to the user specified amount
+    private void addFoodMass() {
+        System.out.println("\nENTER MASS OF FOOD TO NEAREST GRAM:");
+        int cmd = input.nextInt();
+        while (0 > cmd) {
+            System.out.println("Please enter a valid mass");
+            cmd = input.nextInt();
+        }
+        food.setMass(cmd);
+        System.out.println("Food mass has been set to " + cmd + "g");
+    }
+
+    //MODIFIES: this
+    //EFFECTS: checks if user input is valid and adds food to the proper meal time
     private void addFoodWhen() {
-        String cmd = "0";
         boolean run = true;
         while (run) {
             System.out.println("\nSelect meal:");
@@ -124,9 +191,9 @@ public class FitnessApp {
             System.out.println("\t3 -> Dinner");
             System.out.println("\t4 -> Snacks");
 
-            cmd = input.next();
+            String cmd = input.next();
             if (cmd.equals("1") || cmd.equals("2") || cmd.equals("3") || cmd.equals("4")) {
-                System.out.println(processFoodType(cmd));
+                System.out.println(processFoodWhen(cmd));
                 run = false;
             } else {
                 System.out.println("Selection invalid...");
@@ -134,7 +201,11 @@ public class FitnessApp {
         }
     }
 
-    private String processFoodType(String cmd) {
+    //REQUIRES: command = "1" or "2" or "3" or "4"
+    //MODIFIES: this
+    //EFFECTS: processes user input and adds food to the proper mealtime and returns string that represents which
+    // option was selected
+    private String processFoodWhen(String cmd) {
         String select = "";
         if (cmd.equals("1")) {
             food.setTimeOfDay("Breakfast");
@@ -156,60 +227,10 @@ public class FitnessApp {
         return select;
     }
 
-
-    private void addFoodMass() {
-        System.out.println("\nENTER MASS OF FOOD TO NEAREST GRAM:");
-        int cmd = input.nextInt();
-        while (0 > cmd) {
-            System.out.println("Please enter a valid mass");
-            cmd = input.nextInt();
-        }
-        food.setMass(cmd);
-        System.out.println("Food mass has been set to " + cmd + "g");
-    }
-
-
-    private void addFoodType() {
-        String cmd = "0";
-        boolean run = true;
-        while (run) {
-            System.out.println("\nSelect one of the food categories:");
-            System.out.println("\t1 -> Vegetables and Fruits");
-            System.out.println("\t2 -> Protein");
-            System.out.println("\t3 -> Grains");
-            System.out.println("\t4 -> Others");
-
-            cmd = input.next();
-            if (cmd.equals("1") || cmd.equals("2") || cmd.equals("3") || cmd.equals("4")) {
-                System.out.println(processFoodCmd(cmd));
-                run = false;
-            } else {
-                System.out.println("Selection invalid...");
-            }
-        }
-    }
-
-    private String processFoodCmd(String cmd) {
-        String select = "";
-        if (cmd.equals("1")) {
-            food.setType(FoodTypes.VEGETABLES_AND_FRUITS);
-            select = "Selected Vegetables and Fruits";
-        } else if (cmd.equals("2")) {
-            food.setType(FoodTypes.PROTEINS);
-            select = "Selected Protein";
-        } else if (cmd.equals("3")) {
-            food.setType(FoodTypes.GRAINS);
-            select = "Selected Grains";
-        } else if (cmd.equals("4")) {
-            food.setType(FoodTypes.OTHERS);
-            select = "Selected Others";
-        }
-        return select;
-    }
-
+    //MODIFIES: this
+    //EFFECTS: displays menu for viewing foods eaten and checks for valid user input
     private void doViewFoods() {
         System.out.println("\nFOODS EATEN TODAY");
-        String cmd = "0";
         boolean run = true;
         while (run) {
             System.out.println("\nSelect one of the following to view:");
@@ -218,7 +239,7 @@ public class FitnessApp {
             System.out.println("\t3 -> Dinner");
             System.out.println("\t4 -> Snacks");
 
-            cmd = input.next();
+            String cmd = input.next();
             if (cmd.equals("1") || cmd.equals("2") || cmd.equals("3") || cmd.equals("4")) {
                 System.out.println(processViewFoods(cmd));
                 System.out.println("\nEnter 1 to check other meals or any key to return to the main menu");
@@ -232,7 +253,9 @@ public class FitnessApp {
         }
     }
 
-
+    //REQUIRES: Command = "1" or "2" or "3" or "4"
+    //MODIFIES: this
+    //EFFECTS: processes user inputs for viewing foods in meals and returns result
     private String processViewFoods(String cmd) {
         String select = "";
         if (cmd.equals("1")) {
@@ -247,6 +270,8 @@ public class FitnessApp {
         return select;
     }
 
+    //MODIFIES: this
+    //EFFECTS: return string of all foods eaten for breakfast
     private String viewBreakfast() {
         List<Food> breakfast = person.getBreakfast();
         if (breakfast.isEmpty()) {
@@ -262,6 +287,8 @@ public class FitnessApp {
         return foods;
     }
 
+    //MODIFIES: this
+    //EFFECTS: return string of all foods eaten for lunch
     private String viewLunch() {
         List<Food> lunch = person.getLunch();
         if (lunch.isEmpty()) {
@@ -277,6 +304,8 @@ public class FitnessApp {
         return foods;
     }
 
+    //MODIFIES: this
+    //EFFECTS: return string of all foods eaten for dinner
     private String viewDinner() {
         List<Food> dinner = person.getDinner();
         if (dinner.isEmpty()) {
@@ -292,6 +321,8 @@ public class FitnessApp {
         return foods;
     }
 
+    //MODIFIES: this
+    //EFFECTS: return string of all foods eaten for snacks
     private String viewSnacks() {
         List<Food> snacks = person.getSnacks();
         if (snacks.isEmpty()) {
@@ -307,39 +338,55 @@ public class FitnessApp {
         return foods;
     }
 
-    private void doRecommend() {
-        System.out.println("\nPERSONALIZED RECOMMENDATIONS");
-        String cmd = "";
-        boolean run = true;
-        while (run) {
-            System.out.println("\nSelect one of the following categories:");
-            System.out.println("\t1 -> Diet Recommendation");
-            System.out.println("\t2 -> Exercise Recommendation");
-
-            cmd = input.next();
-            if (cmd.equals("1") || cmd.equals("2")) {
-                System.out.println(processRecommendations(cmd));
-                System.out.println("\nEnter 1 to get other recommendations or any key to return to main menu");
-                cmd = input.next();
-                if (!cmd.equals("1")) {
-                    run = false;
-                }
-            } else {
-                System.out.println("Selection invalid...");
-            }
-        }
+    //MODIFIES: this
+    //EFFECTS: adds exercise to persons list of exercises
+    private void doAddExercise() {
+        exercise = new Exercise();
+        System.out.println("\nADDING EXERCISE");
+        addExerciseName();
+        addExerciseTime();
+        addExerciseCal();
+        person.addExercise(exercise);
+        System.out.println(exercise.getName() + " has been successfully added to your exercises");
     }
 
-    private String processRecommendations(String cmd) {
-        String select = "";
-        if (cmd.equals("1")) {
-            select = calc.recommendDiet(person);
-        } else if (cmd.equals("2")) {
-            select = calc.recommendExercise(person);
-        }
-        return select;
+    //MODIFIES: this
+    //EFFECTS: sets name of exercise to user input
+    private void addExerciseName() {
+        System.out.println("\nENTER NAME OF EXERCISE:");
+        String cmd = input.next();
+        exercise.setName(cmd);
+        System.out.println("Exercise name has been set to " + cmd);
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets amount of exercise time to user input and checks if input is valid
+    private void addExerciseTime() {
+        System.out.println("\nENTER TIME SPENT EXERCISING TO NEAREST MINUTE:");
+        int cmd = input.nextInt();
+        while (0 > cmd) {
+            System.out.println("Please enter a valid amount of time");
+            cmd = input.nextInt();
+        }
+        exercise.setTime(cmd);
+        System.out.println("Exercise time has been set to " + cmd + " minutes");
+    }
+
+    //MODIFIES: this
+    //EFFECTS: sets calories burned in exercise and checks for valid input
+    private void addExerciseCal() {
+        System.out.println("\nENTER CALORIES BURNED:");
+        int cmd = input.nextInt();
+        while (0 > cmd) {
+            System.out.println("Please enter a valid caloric amount");
+            cmd = input.nextInt();
+        }
+        exercise.setCalories(cmd);
+        System.out.println("Calories burned has been set to" + cmd + " cal");
+    }
+
+    //MODIFIES: this
+    //EFFECTS: displays exercises done in the day
     private void doViewExercises() {
         System.out.println("EXERCISES DONE TODAY:");
         List<Exercise> exercise = person.getExercises();
@@ -357,46 +404,123 @@ public class FitnessApp {
         input.next();
     }
 
-    private void doAddExercise() {
-        exercise = new Exercise();
-        System.out.println("\nADDING EXERCISE");
-        addExerciseName();
-        addExerciseTime();
-        addExerciseCal();
-        person.addExercise(exercise);
-        System.out.println(exercise.getName() + " has been successfully added to your exercises");
-    }
+    //MODIFIES: this
+    //EFFECTS: displays recommendation menu and checks for valid inputs
+    private void doRecommend() {
+        System.out.println("\nPERSONALIZED RECOMMENDATIONS");
+        boolean run = true;
+        while (run) {
+            System.out.println("\nSelect one of the following categories:");
+            System.out.println("\t1 -> Diet Recommendation");
+            System.out.println("\t2 -> Exercise Recommendation");
 
-    private void addExerciseCal() {
-        System.out.println("\nENTER CALORIES BURNED:");
-        int cmd = input.nextInt();
-        while (0 > cmd) {
-            System.out.println("Please enter a valid caloric amount");
-            cmd = input.nextInt();
+            String cmd = input.next();
+            if (cmd.equals("1") || cmd.equals("2")) {
+                System.out.println(processRecommendations(cmd));
+                System.out.println("\nEnter 1 to get other recommendations or any key to return to main menu");
+                cmd = input.next();
+                if (!cmd.equals("1")) {
+                    run = false;
+                }
+            } else {
+                System.out.println("Selection invalid...");
+            }
         }
-        exercise.setCalories(cmd);
-        System.out.println("Calories burned has been set to" + cmd + " cal");
     }
 
-    private void addExerciseTime() {
-        System.out.println("\nENTER TIME SPENT EXERCISING TO NEAREST MINUTE:");
-        int cmd = input.nextInt();
-        while (0 > cmd) {
-            System.out.println("Please enter a valid amount of time");
-            cmd = input.nextInt();
+    //MODIFIES: this
+    //EFFECTS: processes user input and returns a string of recommendations
+    private String processRecommendations(String cmd) {
+        String select = "";
+        if (cmd.equals("1")) {
+            select = calc.recommendDiet(person);
+        } else if (cmd.equals("2")) {
+            select = calc.recommendExercise(person);
         }
-        exercise.setTime(cmd);
-        System.out.println("Exercise time has been set to " + cmd + " minutes");
+        return select;
     }
 
-    private void addExerciseName() {
-        System.out.println("\nENTER NAME OF EXERCISE:");
+    //MODIFIES: this
+    //EFFECTS: displays menu and sets sex of user
+    private void setPersonSex() {
+        System.out.println();
+        System.out.println("SELECT FROM ONE OF: \n\t M for male \n\t F for female");
         String cmd = input.next();
-        exercise.setName(cmd);
-        System.out.println("Exercise name has been set to " + cmd);
+        cmd = cmd.toLowerCase();
+        while (!cmd.equals("m") && !cmd.equals("f")) {
+            System.out.println("Not valid selection...");
+            cmd = input.next();
+            cmd = cmd.toLowerCase();
+        }
+        if (cmd.equals("m")) {
+            person.setMale();
+            System.out.println("You have set your gender to: Male");
+            System.out.println();
+        } else {
+            person.setFemale();
+            System.out.println("You have set your gender to: Female");
+            System.out.println();
+        }
     }
 
+    //MODIFIES: this
+    //EFFECTS: displays menu and sets person name to user input
+    private void setPersonName() {
+        System.out.println();
+        System.out.println("ENTER YOUR NAME:");
+        String cmd = input.next();
+        person.setName(cmd);
+        System.out.println("You have set your name to: " + cmd);
+        System.out.println();
+    }
 
+    //MODIFIES: this
+    //EFFECTS: displays menu and sets persons age
+    private void setPersonAge() {
+        System.out.println();
+        System.out.println("ENTER YOUR AGE:");
+        int cmd = input.nextInt();
+        while (0 >= cmd) {
+            System.out.println("Please enter a valid age");
+            cmd = input.nextInt();
+        }
+        person.setAge(cmd);
+        System.out.println("You have set your age to: " + cmd);
+        System.out.println();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: displays menu and sets persons height
+    private void setPersonHeight() {
+        System.out.println();
+        System.out.println("ENTER HEIGHT TO THE NEAREST CENTIMETER:");
+        int cmd = input.nextInt();
+        while (0 >= cmd) {
+            System.out.println("Please enter a valid height");
+            cmd = input.nextInt();
+        }
+        person.setHeight(cmd);
+        System.out.println("\tYou have set your height to: " + cmd + "CM");
+        System.out.println();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: displays menu and sets persons weight
+    private void setPersonWeight() {
+        System.out.println();
+        System.out.println("ENTER YOUR WEIGHT TO THE NEAREST KILOGRAM:");
+        int cmd = input.nextInt();
+        while (0 >= cmd) {
+            System.out.println("Please enter a valid weight");
+            cmd = input.nextInt();
+        }
+        person.setStartWeight(cmd);
+        System.out.println("\tYou have set your weight to: " + cmd + "KG");
+        System.out.println();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: displays menu and sets persons goals, also checks if goal is feasible given time frame
     private void setPersonGoal() {
         System.out.println();
         System.out.println("ENTER YOUR GOAL WEIGHT TO THE NEAREST KILOGRAM:");
@@ -417,76 +541,5 @@ public class FitnessApp {
         int cal = calc.calcDailyCal(person);
         person.setDailyRecCalories(cal);
         System.out.println("Your daily calorie goal has been set to: " + cal + " calories.");
-    }
-
-
-    private void setPersonSex() {
-        System.out.println();
-        System.out.println("SELECT FROM ONE OF: \n\t M for male \n\t F for female");
-        String cmd = input.next();
-        cmd = cmd.toLowerCase();
-        while (!cmd.equals("m") && !cmd.equals("f")) {
-            System.out.println("Not valid selection...");
-            cmd = input.next();
-            cmd = cmd.toLowerCase();
-        }
-        if (cmd.equals("m")) {
-            person.setMale();
-            System.out.println("You have set your gender to: Male");
-            System.out.println();
-        } else if (cmd.equals("f")) {
-            person.setFemale();
-            System.out.println("You have set your gender to: Female");
-            System.out.println();
-        }
-    }
-
-    private void setPersonHeight() {
-        System.out.println();
-        System.out.println("ENTER HEIGHT TO THE NEAREST CENTIMETER:");
-        int cmd = input.nextInt();
-        while (0 >= cmd) {
-            System.out.println("Please enter a valid height");
-            cmd = input.nextInt();
-        }
-        person.setHeight(cmd);
-        System.out.println("\tYou have set your height to: " + cmd + "CM");
-        System.out.println();
-    }
-
-    private void setPersonWeight() {
-        System.out.println();
-        System.out.println("ENTER YOUR WEIGHT TO THE NEAREST KILOGRAM:");
-        int cmd = input.nextInt();
-        while (0 >= cmd) {
-            System.out.println("Please enter a valid weight");
-            cmd = input.nextInt();
-        }
-        person.setStartWeight(cmd);
-        System.out.println("\tYou have set your weight to: " + cmd + "KG");
-        System.out.println();
-    }
-
-    private void setPersonAge() {
-        System.out.println();
-        System.out.println("ENTER YOUR AGE:");
-        int cmd = input.nextInt();
-        while (0 >= cmd) {
-            System.out.println("Please enter a valid age");
-            cmd = input.nextInt();
-        }
-        person.setAge(cmd);
-        System.out.println("You have set your age to: " + cmd);
-        System.out.println();
-    }
-
-
-    private void setPersonName() {
-        System.out.println();
-        System.out.println("ENTER YOUR NAME:");
-        String cmd = input.next();
-        person.setName(cmd);
-        System.out.println("You have set your name to: " + cmd);
-        System.out.println();
     }
 }

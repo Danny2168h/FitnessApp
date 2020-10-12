@@ -19,7 +19,8 @@ public class Calculator {
     private static final double RATIO_OF_PROTEINS = 0.25;
     private static final double MAX_AMOUNT_OF_OTHERS = 100;
 
-    //EFFECTS: produces true if diet is safe false otherwise
+    //REQUIRES: Person must have goal days > 0 and non negative inputs for start weight and goal weight
+    //EFFECTS: calculates diet safety given minimum daily calorie and produces true if diet is safe false otherwise
     public Boolean checkDietSafety(Person p) {
         if (p.getGoalWeight() >= p.getStartWeight()) {
             return true;
@@ -35,6 +36,8 @@ public class Calculator {
         }
     }
 
+    //REQUIRES: Person must have goal days > 0 and non negative inputs for start weight and goal weight
+    //EFFECTS: calculates the users daily allotted calories to achieve goal in timeframe set by user
     public int calcDailyCal(Person p) {
         int calorieDeficit = ONE_KG_FAT_CALORIES * (p.getStartWeight() - p.getGoalWeight());
         int dailyCalorie = calorieDeficit / p.getGoalDays();
@@ -46,6 +49,7 @@ public class Calculator {
         }
     }
 
+    //EFFECTS: returns the equation in string form of goal calories - food + exercise = remaining calories
     public String makeEquation(Person person) {
         String equation = "";
         String recCal = Integer.toString(person.getDailyRecCalories());
@@ -63,6 +67,7 @@ public class Calculator {
         return equation;
     }
 
+    //EFFECTS: returns string that represents the recommendation for exercise given users exercises
     public String recommendExercise(Person p) {
         int exerciseTime = 0;
         List<Exercise> loe = p.getExercises();
@@ -79,6 +84,7 @@ public class Calculator {
         }
     }
 
+    //EFFECTS: returns string that represents the recommendation for a users diet based on the foods they ate
     public String recommendDiet(Person p) {
         double grainsMass = 0;
         double proteinMass = 0;
@@ -102,6 +108,8 @@ public class Calculator {
         return makeRecommendDiet(grainsMass, proteinMass, vegAndFruitMass, othersMass, total);
     }
 
+    //REQUIRES: total mass of all foods must be greater than 0
+    //EFFECTS: returns string that is the recommendation for users diet
     private String makeRecommendDiet(double grainsMass, double proteinMass, double vegAndFruitMass, double othersMass,
                                      double total) {
         String recommendations = advice();
@@ -129,11 +137,13 @@ public class Calculator {
         return recommendations;
     }
 
+    //EFFECTS: returns a string that contains advice
     private String advice() {
         return "For a balanced diet, half of what you eat should be grains, a quarter should be proteins and another"
                 + " quarter should be fruits and veggies" + "\nBelow are a list of suggestions to improve your diet:";
     }
 
+    //EFFECTS: adds all foods from each meal into one single list and return that list
     private List<Food> addAllFoods(Person p) {
 
         List<Food> allFoods = new ArrayList<>();
@@ -145,6 +155,7 @@ public class Calculator {
         return allFoods;
     }
 
+    //EFFECTS: calculates the users total calories burned from all exercises combined and returns value
     private Integer exerciseCalCalc(Person p) {
         int exerCals = 0;
         for (Exercise pa : p.getExercises()) {
@@ -154,6 +165,7 @@ public class Calculator {
 
     }
 
+    //EFFECTS: calculates the users total amount of calories from all foods eaten and returns value
     private int foodCalCalc(Person person) {
         int foodCals = 0;
         List<Food> allFood = addAllFoods(person);
