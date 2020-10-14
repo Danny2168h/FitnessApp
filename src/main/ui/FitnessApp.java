@@ -288,7 +288,7 @@ public class FitnessApp {
         foods = foods.concat("YOUR BREAKFAST ITEMS:");
         for (Food f : breakfast) {
             String oneFood = "Name: " + f.getName() + "   " + "Type: " + f.typeToString() + "   " + "Calories: "
-                    + f.getCalories() + "   " + "Mass: " + f.getMass();
+                    + f.getCalories() + "   " + "Mass: " + (int) f.getMass();
             foods = foods.concat("\n" + oneFood);
         }
         return foods;
@@ -305,7 +305,7 @@ public class FitnessApp {
         foods = foods.concat("YOUR LUNCH ITEMS:");
         for (Food f : lunch) {
             String oneFood = "Name: " + f.getName() + "   " + "Type: " + f.typeToString() + "   " + "Calories: "
-                    + f.getCalories() + "   " + "Mass(g): " + f.getMass();
+                    + f.getCalories() + "   " + "Mass(g): " + (int) f.getMass();
             foods = foods.concat("\n" + oneFood);
         }
         return foods;
@@ -322,7 +322,7 @@ public class FitnessApp {
         foods = foods.concat("YOUR DINNER ITEMS:");
         for (Food f : dinner) {
             String oneFood = "Name: " + f.getName() + "   " + "Type: " + f.typeToString() + "   " + "Calories: "
-                    + f.getCalories() + "   " + "Mass: " + f.getMass();
+                    + f.getCalories() + "   " + "Mass: " + (int) f.getMass();
             foods = foods.concat("\n" + oneFood);
         }
         return foods;
@@ -339,7 +339,7 @@ public class FitnessApp {
         foods = foods.concat("YOUR SNACK ITEMS:");
         for (Food f : snacks) {
             String oneFood = "Name: " + f.getName() + "   " + "Type: " + f.typeToString() + "   " + "Calories: "
-                    + f.getCalories() + "   " + "Mass: " + f.getMass();
+                    + f.getCalories() + "   " + "Mass: " + (int) f.getMass();
             foods = foods.concat("\n" + oneFood);
         }
         return foods;
