@@ -4,10 +4,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-//has personal information about the person, their food eaten, activities, their goals are stored here
-//foods and activities can only be edited the day of. we should be able to access profile and update medical
-//conditions only.
 
+//Represents a person with their information along with the foods and exercises that they have done in the day
 //units are in CM and KG for height and weight respectively
 public class Person {
 

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FoodTest {
 
+    //Food test class
     private Food food;
 
     @BeforeEach

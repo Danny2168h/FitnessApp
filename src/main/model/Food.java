@@ -1,8 +1,8 @@
 package model;
 
 
-//information about food, split into different categories of foods, and breakfast lunch and dinner. foods can be
-//removed and added only during the day amount is in grams
+//Represents a food, with information about the foods name, amount of calories, mass and when it was consumed.
+//Mass is in grams.
 
 
 public class Food {

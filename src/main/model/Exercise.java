@@ -1,7 +1,8 @@
 package model;
 
-//type of activity, cardio, weight training, amount of time spent doing activity and the calories burned
-//time is in mins
+//Represents an exercise, stores information of the name of the exercise along with the time spent exercising and the
+// amount of calories that were burned.
+//Time is in minutes.
 public class Exercise {
 
     private int time;

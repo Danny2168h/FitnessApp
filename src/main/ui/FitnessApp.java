@@ -9,6 +9,9 @@ import model.Person;
 import java.util.List;
 import java.util.Scanner;
 
+
+//Fitness App class contains the code for the console based UI of the fitness app.
+
 public class FitnessApp {
 
     private Person person;

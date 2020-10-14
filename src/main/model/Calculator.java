@@ -4,7 +4,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-//Does the calculations and recommendation for the program
+//Calculator class processes information from the other classes, it stores the methods that calculates diet safety,
+//recommendation calculations etc.
 //https://www.hsph.harvard.edu/nutritionsource/healthy-eating-plate/ source for ratios of food to eat
 //https://www.healthline.com/nutrition/how-many-calories-per-day for calories to maintain weight
 public class Calculator {

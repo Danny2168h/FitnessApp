@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonTest {
 
+    //Person test class
     private Person person;
 
     @BeforeEach
