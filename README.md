@@ -32,10 +32,10 @@ people to strive towards a healthier lifestyle even during times like this.
 
 What the app should be able to do:
 - The user will be able to create an account by inputting their information.
-- The user will be able to add foods to breakfast, lunch, dinner or snack categories.
-- The user will be able to add physical activities performed.
-- The user will be able to view the foods they have eaten
-- The user will be able to view the physical activities they have done.
-- The user will be able to view the caloric goal in the day, this should update as activities or foods are added.
+- The user will be able to add foods to breakfast, lunch, dinner or snack categories. (GRADE THIS)
+- The user will be able to add physical activities performed. (GRADE THIS)
+- The user will be able to view the foods they have eaten. (GRADE THIS)
+- The user will be able to view the physical activities they have done. 
+- The user will be able to view the caloric goal in the day, this should update as activities or foods are added. (GRADE THIS)
 - The user will be able to get a recommendation for their diet based on the foods they have eaten.
 

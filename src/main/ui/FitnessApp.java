@@ -333,7 +333,7 @@ public class FitnessApp {
             return "You have no items in snacks";
         }
         String foods = "";
-        foods = foods.concat("YOUR DINNER ITEMS:");
+        foods = foods.concat("YOUR SNACK ITEMS:");
         for (Food f : snacks) {
             String oneFood = "Name: " + f.getName() + "   " + "Type: " + f.typeToString() + "   " + "Calories: "
                     + f.getCalories() + "   " + "Mass: " + f.getMass();
