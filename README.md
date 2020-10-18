@@ -1,6 +1,6 @@
 # Fitness Tracker
 
-## Task 2 
+## Task 1 
 
 ***What will the application do?***
 
@@ -28,7 +28,7 @@ meant that I often found myself sitting at my desk for hours on end. By making a
 people to strive towards a healthier lifestyle even during times like this.
 
 ## Task 2 
-***User Stories***
+***User Stories Phase 1***
 
 What the app should be able to do:
 - The user will be able to create an account by inputting their information.
@@ -39,3 +39,8 @@ What the app should be able to do:
 - The user will be able to view the caloric goal in the day, this should update as activities or foods are added. (GRADE THIS)
 - The user will be able to get a recommendation for their diet based on the foods they have eaten.
 
+
+***User Stories Phase 2***
+- The user will be able to save their account information and all the foods along with exercises they have done.
+- The user upon starting the program, will be allowed a choice to load their account info with all the foods and exercises
+they have done.
