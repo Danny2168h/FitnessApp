@@ -5,7 +5,10 @@ package model;
 //Mass is in grams.
 
 
-public class Food {
+import org.json.JSONObject;
+import persistence.Writeable;
+
+public class Food implements Writeable {
 
     private String name;
     private FoodTypes type;
@@ -68,5 +71,22 @@ public class Food {
 
     public void setTimeOfDay(String s) {
         this.timeOfDay = s;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        return null;
+    }
+
+    //EFFECTS: returns food as a JSON object
+    public JSONObject foodToJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("type", type);
+        json.put("calories", calories);
+        json.put("mass", mass);
+        json.put("timeOfDay", timeOfDay);
+
+        return json;
     }
 }

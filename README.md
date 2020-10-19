@@ -39,8 +39,10 @@ What the app should be able to do:
 - The user will be able to view the caloric goal in the day, this should update as activities or foods are added. (GRADE THIS)
 - The user will be able to get a recommendation for their diet based on the foods they have eaten.
 
+- The user will be able to view their own personal information such as height weight etc.
+
 
 ***User Stories Phase 2***
-- The user will be able to save their account information and all the foods along with exercises they have done.
-- The user upon starting the program, will be allowed a choice to load their account info with all the foods and exercises
-they have done.
+- The user will be able to save their account information and all the foods along with exercises they have done to thier
+account.
+- The user upon starting the program, will be allowed to choose between three different accounts to load.

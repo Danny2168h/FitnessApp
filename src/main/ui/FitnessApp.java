@@ -5,7 +5,11 @@ import model.Exercise;
 import model.Food;
 import model.FoodTypes;
 import model.Person;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,16 +24,35 @@ public class FitnessApp {
     private Food food;
     private Exercise exercise;
 
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
+    //Takes value from 1-3 and represents which account is being modified
+    private String accountNum;
+
     //EFFECTS: runs Fitness app program
     public FitnessApp() {
-        runFitnessApp();
+        try {
+            runFitnessApp();
+        } catch (IOException e) {
+            System.out.println("Files broken");
+        }
     }
 
     //source: from TellerApp example
     //MODIFIES: this
     //EFFECTS: processes user inputs and runs program
-    private void runFitnessApp() {
-        init();
+    private void runFitnessApp() throws IOException {
+        input = new Scanner(System.in);
+        calc = new Calculator();
+        person = new Person();
+
+        if (loadSave()) {
+            init();
+        } else {
+            loadState();
+        }
+
         System.out.println();
         System.out.println("Welcome " + person.getName() + " to your Personalized Fitness Tracker!");
 
@@ -37,7 +60,7 @@ public class FitnessApp {
             displayMenu();
             String cmd = input.next();
 
-            if (cmd.equals("6")) {
+            if (cmd.equals("8")) {
                 break;
             } else {
                 processCommand(cmd);
@@ -46,6 +69,53 @@ public class FitnessApp {
         System.out.println("\nGoodbye!");
     }
 
+    //MODIFIES: this
+    //EFFECTS: Processes user commands and determines whether to load a previous save state or not
+    private boolean loadSave() throws IOException {
+        boolean run = true;
+        boolean isEmpty = true;
+        System.out.println("Please Select an Account:");
+        while (run) {
+            System.out.println("\nSelect from:");
+            System.out.println("\t1 -> " + getAccountName("1") + " account");
+            System.out.println("\t2 -> " + getAccountName("2") + " account");
+            System.out.println("\t3 -> " + getAccountName("3") + " account");
+
+            String cmd = input.next();
+            if (cmd.equals("1") || cmd.equals("2") || cmd.equals("3")) {
+                accountNum = cmd;
+                isEmpty = getAccountName(cmd).equals("Empty");
+                run = false;
+            } else {
+                System.out.println("Selection invalid...");
+            }
+        }
+        return isEmpty;
+    }
+
+
+    //REQUIRES: Input to be 1,2 or 3
+    //EFFECTS: Produces the name of the account
+    private String getAccountName(String i) throws IOException {
+        Boolean empty = true;
+        Person p = null;
+        if (i.equals("1")) {
+            jsonReader = new JsonReader("./data/person1.json");
+            empty = jsonReader.isEmptyFile();
+        } else if (i.equals("2")) {
+            jsonReader = new JsonReader("./data/person2.json");
+            empty = jsonReader.isEmptyFile();
+        } else {
+            jsonReader = new JsonReader("./data/person3.json");
+            empty = jsonReader.isEmptyFile();
+        }
+        if (empty) {
+            return "Empty";
+        } else {
+            p = jsonReader.read();
+            return p.getName() + "'s";
+        }
+    }
 
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
@@ -57,17 +127,16 @@ public class FitnessApp {
         System.out.println("\t2 -> View Foods");
         System.out.println("\t3 -> Add Exercise");
         System.out.println("\t4 -> View Exercises");
-        System.out.println("\t5 -> Recommendation");
-        System.out.println("\t6 -> Quit");
+        System.out.println("\t5 -> View Profile");
+        System.out.println("\t6 -> Recommendation");
+        System.out.println("\t7 -> Save Data");
+        System.out.println("\t8 -> Quit");
     }
 
     //MODIFIES: this
     //EFFECTS: initializes fields and fills in persons account information
     private void init() {
-        input = new Scanner(System.in);
-        calc = new Calculator();
-        person = new Person();
-        System.out.println("\nWelcome to your new healthy lifestyle! \nBefore we begin we will need some of your info");
+        System.out.println("\nPlease enter your information below");
         setPersonSex();
         setPersonName();
         setPersonAge();
@@ -88,10 +157,57 @@ public class FitnessApp {
         } else if (cmd.equals("4")) {
             doViewExercises();
         } else if (cmd.equals("5")) {
+            doViewProfile();
+        } else if (cmd.equals("6")) {
             doRecommend();
+        } else if (cmd.equals("7")) {
+            doSaveState();
         } else {
             System.out.println("Selection is not valid...");
         }
+    }
+
+    //MODIFIES: this
+    //EFFECTS: loads the selected person into fitness app
+    private void loadState() {
+        jsonReader = new JsonReader("./data/person" + accountNum + ".json");
+        try {
+            person = jsonReader.read();
+            System.out.println("Data has been successfully loaded!");
+        } catch (IOException e) {
+            System.out.println("Unable to write to file");
+        }
+    }
+
+    //EFFECTS: Stores the current state of person into json file
+    private void doSaveState() {
+        System.out.println("\nSaving Overrides any previous data, Press 1 to confirm save or any key to return to "
+                + "main menu");
+        String cmd = input.next();
+        if (cmd.equals("1")) {
+            jsonWriter = new JsonWriter("./data/person" + accountNum + ".json");
+            try {
+                jsonWriter.open();
+                jsonWriter.write(person);
+                jsonWriter.close();
+                System.out.println("Data has been successfully saved!");
+            } catch (FileNotFoundException e) {
+                System.out.println("unable to write to file");
+            }
+        }
+    }
+
+    //EFFECTS: Displays persons personal profile and information to console
+    private void doViewProfile() {
+        System.out.println("\nPERSONAL PROFILE");
+        System.out.println("Name: " + person.getName());
+        System.out.println("Age: " + (int) person.getAge());
+        System.out.println("Current Height: " + (int) person.getHeight() + "cm");
+        System.out.println("Current Weight: " + (int) person.getStartWeight() + "kg");
+        System.out.println("Your Goal Weight: " + (int) person.getGoalWeight() + "kg");
+
+        System.out.println("\nEnter any key to return to main menu");
+        input.next();
     }
 
     //MODIFIES: this
@@ -121,7 +237,7 @@ public class FitnessApp {
     private void addFoodType() {
         boolean run = true;
         while (run) {
-            System.out.println("\nSelect one of the food categories:");
+            System.out.println("\nSELECT ONE OF THE FOOD CATEGORIES:");
             System.out.println("\t1 -> Vegetables and Fruits");
             System.out.println("\t2 -> Protein");
             System.out.println("\t3 -> Grains");
@@ -192,7 +308,7 @@ public class FitnessApp {
     private void addFoodWhen() {
         boolean run = true;
         while (run) {
-            System.out.println("\nSelect meal:");
+            System.out.println("\nSELECT MEAL:");
             System.out.println("\t1 -> Breakfast");
             System.out.println("\t2 -> Lunch");
             System.out.println("\t3 -> Dinner");
@@ -288,7 +404,7 @@ public class FitnessApp {
         foods = foods.concat("YOUR BREAKFAST ITEMS:");
         for (Food f : breakfast) {
             String oneFood = "Name: " + f.getName() + "   " + "Type: " + f.typeToString() + "   " + "Calories: "
-                    + f.getCalories() + "   " + "Mass: " + (int) f.getMass();
+                    + f.getCalories() + "   " + "Mass(g): " + (int) f.getMass();
             foods = foods.concat("\n" + oneFood);
         }
         return foods;
@@ -322,7 +438,7 @@ public class FitnessApp {
         foods = foods.concat("YOUR DINNER ITEMS:");
         for (Food f : dinner) {
             String oneFood = "Name: " + f.getName() + "   " + "Type: " + f.typeToString() + "   " + "Calories: "
-                    + f.getCalories() + "   " + "Mass: " + (int) f.getMass();
+                    + f.getCalories() + "   " + "Mass(g): " + (int) f.getMass();
             foods = foods.concat("\n" + oneFood);
         }
         return foods;
@@ -339,7 +455,7 @@ public class FitnessApp {
         foods = foods.concat("YOUR SNACK ITEMS:");
         for (Food f : snacks) {
             String oneFood = "Name: " + f.getName() + "   " + "Type: " + f.typeToString() + "   " + "Calories: "
-                    + f.getCalories() + "   " + "Mass: " + (int) f.getMass();
+                    + f.getCalories() + "   " + "Mass(g): " + (int) f.getMass();
             foods = foods.concat("\n" + oneFood);
         }
         return foods;
@@ -407,7 +523,7 @@ public class FitnessApp {
             exer = exer.concat("\n" + str);
         }
         System.out.println(exer);
-        System.out.println("\n Enter any key to return to main menu");
+        System.out.println("\nEnter any key to return to main menu");
         input.next();
     }
 

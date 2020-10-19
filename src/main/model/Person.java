@@ -1,13 +1,17 @@
 package model;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writeable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 //Represents a person with their information along with the foods and exercises that they have done in the day
 //units are in CM and KG for height and weight respectively
-public class Person {
+public class Person implements Writeable {
 
     //Persons descriptors
     private String name;
@@ -118,6 +122,26 @@ public class Person {
     public void setDailyRecCalories(double c) {
         this.dailyRecCalories = c;
     }
+    
+    public void setBreakfast(List<Food> breakfast) {
+        this.breakfast = breakfast;
+    }
+
+    public void setLunch(List<Food> lunch) {
+        this.lunch = lunch;
+    }
+
+    public void setDinner(List<Food> dinner) {
+        this.dinner = dinner;
+    }
+
+    public void setSnacks(List<Food> snacks) {
+        this.snacks = snacks;
+    }
+
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
+    }
 
     //Getters
     public String getName() {
@@ -171,4 +195,70 @@ public class Person {
     public double getAge() {
         return this.age;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("age", age);
+        json.put("startWeight", startWeight);
+        json.put("height", height);
+        json.put("sex", sex);
+        json.put("goalWeight", goalWeight);
+        json.put("goalDays", goalDays);
+        json.put("dailyRecCalories", dailyRecCalories);
+        json.put("breakfast", breakfastToJson());
+        json.put("lunch", lunchToJson());
+        json.put("dinner", dinnerToJson());
+        json.put("snacks", snacksToJson());
+        json.put("exercises", exerciseToJson());
+
+        return json;
+    }
+
+    //EFFECTS: returns breakfast in this as a JSON array
+    private JSONArray breakfastToJson() {
+        JSONArray array = new JSONArray();
+        for (Food f : breakfast) {
+            array.put(f.foodToJson());
+        }
+        return array;
+    }
+
+    //EFFECTS: returns lunch in this as a JSON array
+    private JSONArray lunchToJson() {
+        JSONArray array = new JSONArray();
+        for (Food f : lunch) {
+            array.put(f.foodToJson());
+        }
+        return array;
+    }
+
+    //EFFECTS: returns dinner in this as a JSON array
+    private JSONArray dinnerToJson() {
+        JSONArray array = new JSONArray();
+        for (Food f : dinner) {
+            array.put(f.foodToJson());
+        }
+        return array;
+    }
+
+    //EFFECTS: returns snacks in this as a JSON array
+    private JSONArray snacksToJson() {
+        JSONArray array = new JSONArray();
+        for (Food f : snacks) {
+            array.put(f.foodToJson());
+        }
+        return array;
+    }
+
+    //EFFECTS: returns exercise in this as a JSON array
+    private JSONArray exerciseToJson() {
+        JSONArray array = new JSONArray();
+        for (Exercise e : exercises) {
+            array.put(e.exerciseToJson());
+        }
+        return array;
+    }
+
 }
