@@ -16,6 +16,21 @@ public class Food implements Writeable {
     private double mass;
     private String timeOfDay;
 
+
+    //EFFECTS: Creates food with double and int fields set to 0 and string fields null(main constructor used in program)
+    public Food() {
+    }
+
+    //EFFECTS: constructor that sets value of all fields for a food object
+    // Used in tests to improve readability
+    public Food(String name, FoodTypes type, int calories, double mass, String timeOfDay) {
+        this.name = name;
+        this.type = type;
+        this.calories = calories;
+        this.mass = mass;
+        this.timeOfDay = timeOfDay;
+    }
+
     //EFFECTS: returns string that represents the foods type
     public String typeToString() {
         FoodTypes type = this.getType();

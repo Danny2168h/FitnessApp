@@ -71,6 +71,7 @@ public class JsonReader {
         person.setBreakfast(parseFoods("breakfast", jsonObject));
         person.setLunch(parseFoods("lunch", jsonObject));
         person.setDinner(parseFoods("dinner", jsonObject));
+        person.setSnacks(parseFoods("snacks", jsonObject));
 
         person.setExercises(parseExercises("exercises", jsonObject));
 
