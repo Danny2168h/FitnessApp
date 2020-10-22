@@ -4,7 +4,6 @@ package model;
 //Represents a food, with information about the foods name, amount of calories, mass and when it was consumed.
 //Mass is in grams.
 
-
 import org.json.JSONObject;
 import persistence.Writeable;
 
@@ -89,12 +88,8 @@ public class Food implements Writeable {
     }
 
     @Override
-    public JSONObject toJson() {
-        return null;
-    }
-
     //EFFECTS: returns food as a JSON object
-    public JSONObject foodToJson() {
+    public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("type", type);

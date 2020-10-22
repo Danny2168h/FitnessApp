@@ -220,7 +220,7 @@ public class Person implements Writeable {
     private JSONArray breakfastToJson() {
         JSONArray array = new JSONArray();
         for (Food f : breakfast) {
-            array.put(f.foodToJson());
+            array.put(f.toJson());
         }
         return array;
     }
@@ -229,7 +229,7 @@ public class Person implements Writeable {
     private JSONArray lunchToJson() {
         JSONArray array = new JSONArray();
         for (Food f : lunch) {
-            array.put(f.foodToJson());
+            array.put(f.toJson());
         }
         return array;
     }
@@ -238,7 +238,7 @@ public class Person implements Writeable {
     private JSONArray dinnerToJson() {
         JSONArray array = new JSONArray();
         for (Food f : dinner) {
-            array.put(f.foodToJson());
+            array.put(f.toJson());
         }
         return array;
     }
@@ -247,7 +247,7 @@ public class Person implements Writeable {
     private JSONArray snacksToJson() {
         JSONArray array = new JSONArray();
         for (Food f : snacks) {
-            array.put(f.foodToJson());
+            array.put(f.toJson());
         }
         return array;
     }
@@ -256,7 +256,7 @@ public class Person implements Writeable {
     private JSONArray exerciseToJson() {
         JSONArray array = new JSONArray();
         for (Exercise e : exercises) {
-            array.put(e.exerciseToJson());
+            array.put(e.toJson());
         }
         return array;
     }

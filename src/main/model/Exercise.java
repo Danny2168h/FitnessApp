@@ -3,6 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writeable;
 
+
 //Represents an exercise, stores information of the name of the exercise along with the time spent exercising and the
 // amount of calories that were burned.
 //Time is in minutes.
@@ -45,12 +46,8 @@ public class Exercise implements Writeable {
     }
 
     @Override
-    public JSONObject toJson() {
-        return null;
-    }
-
     //EFFECTS: returns exercise as a JSON object
-    public JSONObject exerciseToJson() {
+    public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("name", name);
         json.put("calories", calories);
