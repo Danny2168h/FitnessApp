@@ -1,1 +1,1 @@
-{"lunch":[],"sex":false,"goalWeight":100,"dinner":[],"goalDays":100,"dailyRecCalories":2000,"exercises":[],"name":"Test","startWeight":100,"breakfast":[],"snacks":[],"age":100,"height":100}
+{"lunch":[],"sex":false,"goalWeight":100,"dinner":[],"goalDays":100,"dailyRecCalories":2000,"exercises":[{"name":"Swim","calories":800,"time":80}],"name":"Test","startWeight":100,"breakfast":[],"snacks":[{"mass":987,"name":"Banana","calories":9000,"type":"VEGETABLES_AND_FRUITS","timeOfDay":"Snacks"}],"age":100,"height":100}

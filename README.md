@@ -43,6 +43,7 @@ What the app should be able to do:
 
 
 ***User Stories Phase 2***
-- The user will be able to save their account information and all the foods along with exercises they have done to thier
+- The user will be able to save their account information and all the foods along with exercises they have done to their
 account.
-- The user upon starting the program, will be allowed to choose between three different accounts to load.
+- The user upon starting the program, will be allowed to load 1 out of 3 different account slots that contain 
+information.
