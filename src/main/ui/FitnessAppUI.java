@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 //Fitness App class contains the code for the console based UI of the fitness app.
 
-public class FitnessApp {
+public class FitnessAppUI {
 
     private Person person;
     private Scanner input;
@@ -31,7 +31,7 @@ public class FitnessApp {
     private String accountNum;
 
     //EFFECTS: runs Fitness app program
-    public FitnessApp() {
+    public FitnessAppUI() {
         try {
             runFitnessApp();
         } catch (IOException e) {
