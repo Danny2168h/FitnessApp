@@ -184,6 +184,7 @@ public class MainMenu extends JPanel {
         //
         @Override
         public void actionPerformed(ActionEvent e) {
+            fitnessAppGUI.viewFoodMenu();
         }
 
     }
@@ -205,6 +206,7 @@ public class MainMenu extends JPanel {
         //
         @Override
         public void actionPerformed(ActionEvent e) {
+            fitnessAppGUI.viewExercises();
         }
 
     }

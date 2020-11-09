@@ -36,6 +36,7 @@ public class FitnessAppGUI {
     private JPanel mainMenu;
     private JPanel addFoodMenu;
     private JPanel addExerciseMenu;
+    private JPanel viewFoodMenu;
 
 
     public FitnessAppGUI() {
@@ -181,5 +182,35 @@ public class FitnessAppGUI {
         } catch (FileNotFoundException e) {
             System.out.println("unable to write to file");
         }
+    }
+
+    public void viewFoodMenu() {
+        frame.remove(mainMenu);
+        frame.repaint();
+        viewFoodMenu = new ViewFoodMenu(this);
+        frame.add(viewFoodMenu);
+    }
+
+    public void displayFoods(int i) {
+        if (i == 0) {
+            new DisplayFoodPopUp(this, person.getBreakfast(), "breakfast");
+        } else if (i == 1) {
+            new DisplayFoodPopUp(this, person.getLunch(), "lunch");
+        } else if (i == 2) {
+            new DisplayFoodPopUp(this, person.getDinner(), "dinner");
+        } else if (i == 3) {
+            new DisplayFoodPopUp(this, person.getSnacks(), "snacks");
+        }
+    }
+
+    public void returnToMainMenuFromViewFoods() {
+        frame.remove(viewFoodMenu);
+        frame.repaint();
+        mainMenu = new MainMenu(this, "Returned from viewing foods");
+        frame.add(mainMenu);
+    }
+
+    public void viewExercises() {
+        new ViewExercise(person.getExercises());
     }
 }
