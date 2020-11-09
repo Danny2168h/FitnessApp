@@ -1,9 +1,6 @@
 package ui;
 
-import model.Calculator;
-import model.Exercise;
-import model.Food;
-import model.Person;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -35,6 +32,8 @@ public class FitnessAppGUI {
     private JPanel startMenu;
     private JPanel createAccountMenu;
     private JPanel mainMenu;
+    private JPanel addFoodMenu;
+    private JPanel addExerciseMenu;
 
 
     public FitnessAppGUI() {
@@ -52,7 +51,8 @@ public class FitnessAppGUI {
         }
         frame.remove(createAccountMenu);
         frame.repaint();
-        //goal menu
+        mainMenu = new MainMenu(this, "Just created a new account!");
+        frame.add(mainMenu);
     }
 
     //REQUIRES: int from 1-3 inclusive
@@ -69,7 +69,8 @@ public class FitnessAppGUI {
                 frame.add(createAccountMenu);
             } else {
                 loadState();
-                //mainMenu(this);
+                mainMenu = new MainMenu(this, "Just logged back on!");
+                frame.add(mainMenu);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,19 +86,65 @@ public class FitnessAppGUI {
         frame.setVisible(true);
     }
 
-    public void setAccountNum(int num) {
-        accountNum = num;
-    }
-
     //MODIFIES: this
     //EFFECTS: loads the selected person into fitness app
     private void loadState() {
         jsonReader = new JsonReader("./data/person" + accountNum + ".json");
         try {
             person = jsonReader.read();
-            System.out.println("Data has been successfully loaded!");
         } catch (IOException e) {
             System.out.println("Unable to write to file");
         }
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void addFoodMenu() {
+        frame.remove(mainMenu);
+        frame.repaint();
+        addFoodMenu = new AddFoodMenu(this);
+        frame.add(addFoodMenu);
+    }
+
+    public void addExercise() {
+        frame.remove(mainMenu);
+        frame.repaint();
+        addExerciseMenu = new AddExerciseMenu(this);
+        frame.add(addExerciseMenu);
+    }
+
+    public void afterAddFood(String strName, FoodTypes type, int mass, int mealTimeSelectedIndex, int calories) {
+        frame.remove(addFoodMenu);
+        frame.repaint();
+        Food f = null;
+        if (mealTimeSelectedIndex == 0) {
+            f = new Food(strName, type, calories, mass, "Added " + strName + " to breakfast");
+            person.addBreakfast(f);
+        } else if (mealTimeSelectedIndex == 1) {
+            f = new Food(strName, type, calories, mass, "Added " + strName + " to lunch");
+            person.addLunch(f);
+        } else if (mealTimeSelectedIndex == 2) {
+            f = new Food(strName, type, calories, mass, "Added " + strName + " to dinner");
+            person.addDinner(f);
+        } else if (mealTimeSelectedIndex == 3) {
+            f = new Food(strName, type, calories, mass, "Added " + strName + " to snacks");
+            person.addSnacks(f);
+        }
+        mainMenu = new MainMenu(this, f.getTimeOfDay());
+        frame.add(mainMenu);
+    }
+
+    public void afterAddExercise(String strName, int calNum, int timeNum) {
+        frame.remove(addExerciseMenu);
+        frame.repaint();
+        Exercise e = new Exercise();
+        e.setName(strName);
+        e.setCalories(calNum);
+        e.setTime(timeNum);
+        person.addExercise(e);
+        mainMenu = new MainMenu(this, "Added "  + e.getName() + " to exercises");
+        frame.add(mainMenu);
     }
 }

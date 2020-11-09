@@ -157,7 +157,7 @@ public class Calculator {
     }
 
     //EFFECTS: calculates the users total calories burned from all exercises combined and returns value
-    private Integer exerciseCalCalc(Person p) {
+    public int exerciseCalCalc(Person p) {
         int exerCals = 0;
         for (Exercise pa : p.getExercises()) {
             exerCals += pa.getCalories();
@@ -167,7 +167,7 @@ public class Calculator {
     }
 
     //EFFECTS: calculates the users total amount of calories from all foods eaten and returns value
-    private int foodCalCalc(Person person) {
+    public int foodCalCalc(Person person) {
         int foodCals = 0;
         List<Food> allFood = addAllFoods(person);
         for (Food f : allFood) {

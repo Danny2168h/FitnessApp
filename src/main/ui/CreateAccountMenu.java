@@ -44,7 +44,7 @@ public class CreateAccountMenu extends JPanel implements ActionListener {
 
         String[] choices = {"Male", "Female"};
         sex = new JComboBox(choices);
-        sex.setLayout(null);
+        //sex.setLayout(null);
         sex.setBounds(LABEL_X + 155, SEX_Y - 5, 60, 25);
 
         weight = new JTextField();
