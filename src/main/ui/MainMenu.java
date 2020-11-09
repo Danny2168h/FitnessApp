@@ -112,6 +112,7 @@ public class MainMenu extends JPanel {
     private void addMath() {
         Calculator calc = new Calculator();
         Person p = fitnessAppGUI.getPerson();
+        p.setDailyRecCalories(calc.calcDailyCal(p));
         JLabel goalCal = new JLabel(String.valueOf((int) p.getDailyRecCalories()));
         JLabel foodCal =  new JLabel(String.valueOf(calc.foodCalCalc(p)));
         JLabel exerciseCal = new JLabel(String.valueOf(calc.exerciseCalCalc(p)));
@@ -214,7 +215,7 @@ public class MainMenu extends JPanel {
         //
         @Override
         public void actionPerformed(ActionEvent e) {
+            fitnessAppGUI.confirmSave();
         }
-
     }
 }

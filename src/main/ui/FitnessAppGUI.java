@@ -6,6 +6,7 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -31,6 +32,7 @@ public class FitnessAppGUI {
     private JFrame frame;
     private JPanel startMenu;
     private JPanel createAccountMenu;
+    private JPanel setGoalMenu;
     private JPanel mainMenu;
     private JPanel addFoodMenu;
     private JPanel addExerciseMenu;
@@ -42,17 +44,13 @@ public class FitnessAppGUI {
         frame.add(startMenu);
     }
 
-    public void afterCreateAccount(int weight, boolean sex, String strName) {
-        person = new Person();
-        person.setName(strName);
-        person.setStartWeight(weight);
-        if (sex) {
-            person.setMale();
-        }
-        frame.remove(createAccountMenu);
-        frame.repaint();
-        mainMenu = new MainMenu(this, "Just created a new account!");
-        frame.add(mainMenu);
+    private void initGUI() {
+        frame = new JFrame();
+        frame.setResizable(false);
+        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.setTitle("Fitness App");
+        frame.setVisible(true);
     }
 
     //REQUIRES: int from 1-3 inclusive
@@ -77,13 +75,26 @@ public class FitnessAppGUI {
         }
     }
 
-    private void initGUI() {
-        frame = new JFrame();
-        frame.setResizable(false);
-        frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        frame.setTitle("Fitness App");
-        frame.setVisible(true);
+    public void afterCreateAccount(int weight, boolean sex, String strName) {
+        person = new Person();
+        person.setName(strName);
+        person.setStartWeight(weight);
+        if (sex) {
+            person.setMale();
+        }
+        frame.remove(createAccountMenu);
+        frame.repaint();
+        setGoalMenu = new SetGoalMenu(this);
+        frame.add(setGoalMenu);
+    }
+
+    public void afterSetGoal(int goalWeight, int days) {
+        frame.remove(setGoalMenu);
+        frame.repaint();
+        person.setGoalWeight(goalWeight);
+        person.setGoalDays(days);
+        mainMenu = new MainMenu(this, "Just created new account");
+        frame.add(mainMenu);
     }
 
     //MODIFIES: this
@@ -144,7 +155,31 @@ public class FitnessAppGUI {
         e.setCalories(calNum);
         e.setTime(timeNum);
         person.addExercise(e);
-        mainMenu = new MainMenu(this, "Added "  + e.getName() + " to exercises");
+        mainMenu = new MainMenu(this, "Added " + e.getName() + " to exercises");
         frame.add(mainMenu);
+    }
+
+    public void confirmSave() {
+        new ConfirmSave(this);
+    }
+
+    public void afterSaveState() {
+        saveState();
+        frame.remove(mainMenu);
+        frame.repaint();
+        mainMenu = new MainMenu(this, "Successfully saved data");
+        frame.add(mainMenu);
+    }
+
+    //EFFECTS: Stores the current state of person into json file
+    private void saveState() {
+        jsonWriter = new JsonWriter("./data/person" + accountNum + ".json");
+        try {
+            jsonWriter.open();
+            jsonWriter.write(person);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("unable to write to file");
+        }
     }
 }

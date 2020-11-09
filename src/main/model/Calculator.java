@@ -22,7 +22,7 @@ public class Calculator {
 
     //REQUIRES: Person must have goal days > 0 and non negative inputs for start weight and goal weight
     //EFFECTS: calculates diet safety given minimum daily calorie and produces true if diet is safe false otherwise
-    public Boolean checkDietSafety(Person p) {
+    public boolean checkDietSafety(Person p) {
         if (p.getGoalWeight() >= p.getStartWeight()) {
             return true;
         } else {
