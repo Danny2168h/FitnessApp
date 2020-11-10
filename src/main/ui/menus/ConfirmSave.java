@@ -1,13 +1,17 @@
-package ui;
+package ui.menus;
+
+import ui.FitnessAppGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents the popup window that prompts users to confirm the save
 public class ConfirmSave extends JDialog implements ActionListener {
 
     private FitnessAppGUI fitnessAppGUI;
 
+    //EFFECTS: Creates a new confirm save pop up window
     public ConfirmSave(FitnessAppGUI fitnessAppGUI) {
         this.fitnessAppGUI = fitnessAppGUI;
         this.setBounds(0, 0, 300, 200);
@@ -28,9 +32,10 @@ public class ConfirmSave extends JDialog implements ActionListener {
 
 
     @Override
+    //MODIFIES: this
+    // EFFECTS: processes button press, disposes of dialog window then updates person field in FitnessAppGUI
     public void actionPerformed(ActionEvent e) {
         this.dispose();
         fitnessAppGUI.afterSaveState();
-
     }
 }

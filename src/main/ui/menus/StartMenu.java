@@ -1,7 +1,8 @@
-package ui;
+package ui.menus;
 
 import model.Person;
 import persistence.JsonReader;
+import ui.FitnessAppGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+//Represents the start menu of the program
 public class StartMenu extends JPanel {
 
     private static final int BUTTON_WIDTH = 175;
@@ -25,6 +27,7 @@ public class StartMenu extends JPanel {
 
     private FitnessAppGUI fitnessAppGUI;
 
+    //EFFECTS: Creates new start menu
     public StartMenu(FitnessAppGUI fitnessAppGUI) {
         this.fitnessAppGUI = fitnessAppGUI;
         this.setLayout(null);
@@ -40,6 +43,8 @@ public class StartMenu extends JPanel {
         }
     }
 
+    //MODIFIES: this
+    //REQUIRES: adds button that represents account 1 to the panel
     private void addButtonAcc1() throws IOException {
         acc1 = new JButton(getAccountName("1"));
         acc1.addActionListener(new Acc1ClickHandler());
@@ -48,6 +53,8 @@ public class StartMenu extends JPanel {
         this.add(acc1);
     }
 
+    //MODIFIES: this
+    //REQUIRES: adds button that represents account 2 to the panel
     private void addButtonAcc2() throws IOException {
         acc2 = new JButton(getAccountName("2"));
         acc2.addActionListener(new Acc2ClickHandler());
@@ -56,6 +63,8 @@ public class StartMenu extends JPanel {
         this.add(acc2);
     }
 
+    //MODIFIES: this
+    //REQUIRES: adds button that represents account 3 to the panel
     private void addButtonAcc3() throws IOException {
         acc3 = new JButton(getAccountName("3"));
         acc3.addActionListener(new Acc3ClickHandler());

@@ -1,12 +1,14 @@
-package ui;
+package ui.menus;
 
-import model.FoodTypes;
+import ui.FitnessAppGUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+//Is a JPanel that represents the adding exercises menu
 public class AddExerciseMenu extends JPanel implements ActionListener {
 
     private static final int LABEL_X = 250;
@@ -22,24 +24,32 @@ public class AddExerciseMenu extends JPanel implements ActionListener {
     private JLabel negativeInputs;
     private JLabel invalidInput;
 
+
+    //EFFECTS: Constructs JPanel which represents the add exercise menu
     public AddExerciseMenu(FitnessAppGUI fitnessAppGUI) {
         this.fitnessAppGUI = fitnessAppGUI;
         this.setLayout(null);
         this.setSize(FitnessAppGUI.FRAME_WIDTH, FitnessAppGUI.FRAME_HEIGHT);
         this.setLocation(0, 0);
         this.setBackground(Color.LIGHT_GRAY);
+
         JLabel title = new JLabel("Enter Details About Exercise Below:");
         title.setFont(new Font("Calibri", Font.BOLD, 35));
         title.setBounds(180, 10, 600, 100);
         this.add(title);
+
         addLabels();
         addInputFields();
+
         submit = new JButton("Submit");
         submit.setBounds(455, TIME_Y + 75, 90, 25);
         submit.addActionListener(this);
+
         this.add(submit);
     }
 
+    //MODIFIES: this
+    //EFFECTS: Adds user inputs fields into JFrame.
     private void addInputFields() {
         name = new JTextField();
         name.setBounds(LABEL_X + 155, NAME_Y - 5, 140, 25);
@@ -55,12 +65,17 @@ public class AddExerciseMenu extends JPanel implements ActionListener {
         this.add(time);
     }
 
+    //MODIFIES: this
+    //EFFECTS: Adds labels to user input fields
     private void addLabels() {
         makeLabels("Exercise Name: ", LABEL_X, NAME_Y);
         makeLabels("Calories: ", LABEL_X, CALORIES_Y);
         makeLabels("Time(mins): ", LABEL_X, TIME_Y);
     }
 
+    //REQUIRES: x and y to be positive integer values that are no larger than size of JFrame
+    //MODIFIES: this
+    //EFFECTS: Adds labels to user input fields
     private void makeLabels(String text, int x, int y) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Calibri", Font.BOLD, 20));
@@ -68,8 +83,9 @@ public class AddExerciseMenu extends JPanel implements ActionListener {
         this.add(label);
     }
 
-    // MODIFIES: FitnessAppGUI
-    // EFFECTS: displays error message if inputs invalid, otherwise updates person field in FitnessAppGUI
+    // MODIFIES: this
+    // EFFECTS: processes button press, displays error message if inputs invalid or negative,
+    //          otherwise updates person field in FitnessAppGUI
     public void actionPerformed(ActionEvent e) {
         String strCalories = calories.getText();
         String strTime = time.getText();
@@ -91,6 +107,8 @@ public class AddExerciseMenu extends JPanel implements ActionListener {
         this.repaint();
     }
 
+    //MODIFIES: this
+    //EFFECTS: Checks if user inputs are non negative for time and calories
     private boolean checkValid(int calories, int time) {
         if (time <= 0 || calories <= 0) {
             if (!checkComponentContains(negativeInputs)) {
@@ -103,12 +121,16 @@ public class AddExerciseMenu extends JPanel implements ActionListener {
         return true;
     }
 
-
+    //MODIFIES: this
+    //EFFECTS: removes all previous error labels from JFrame
     private void removeAllOtherErrorLabels() {
         removeErrorLabel(negativeInputs);
         removeErrorLabel(invalidInput);
     }
 
+    //REQUIRES: valid inputs for calories and time
+    //MODIFIES: this
+    //EFFECTS: passes user inputs into FitnessAppGui
     private void nextSteps() {
         String strName = name.getText();
         String strCalories = calories.getText();
@@ -120,6 +142,7 @@ public class AddExerciseMenu extends JPanel implements ActionListener {
     }
 
 
+    //EFFECTS: Checks if a given label is currently being displayed on the panel
     private boolean checkComponentContains(JLabel label) {
         Component[] componentList = this.getComponents();
 
@@ -131,6 +154,8 @@ public class AddExerciseMenu extends JPanel implements ActionListener {
         return false;
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes the given error label from the JPanel
     private void removeErrorLabel(JLabel label) {
         Component[] componentList = this.getComponents();
 

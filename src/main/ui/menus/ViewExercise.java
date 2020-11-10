@@ -1,4 +1,4 @@
-package ui;
+package ui.menus;
 
 import model.Exercise;
 import model.Food;
@@ -8,11 +8,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
+//Represents the popup window that displays all logged exercises by user
 public class ViewExercise extends JDialog {
 
     private GridBagConstraints gc;
     private List<Exercise> exercises;
 
+    //EFFECTS: creates new popup window that displays all logged exercises
     public ViewExercise(List<Exercise> exercises) {
         this.exercises = exercises;
         this.setBounds(0, 0, 400, 300);
@@ -26,6 +28,8 @@ public class ViewExercise extends JDialog {
         setConstraints();
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets grid bag constraints and adds exercises in correct positions on dialog window
     private void setConstraints() {
         gc = new GridBagConstraints();
         gc.weightx = 1.5;
@@ -34,6 +38,8 @@ public class ViewExercise extends JDialog {
         loopExercises();
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds each exercise to the dialog window
     private void loopExercises() {
         int y = 1;
         for (Exercise e : exercises) {
@@ -56,6 +62,8 @@ public class ViewExercise extends JDialog {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up the titles for the table
     private void titleSetUp() {
         JLabel name = new JLabel("Name: ");
         gc.gridx = 0;

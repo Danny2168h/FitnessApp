@@ -1,15 +1,15 @@
-package ui;
+package ui.menus;
 
 import model.Calculator;
 import model.Person;
-import persistence.JsonReader;
+import ui.FitnessAppGUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
+//Represents the main menu of the fitness app program
 public class MainMenu extends JPanel {
 
     private static final int BUTTON_WIDTH = 175;
@@ -25,6 +25,7 @@ public class MainMenu extends JPanel {
     private JButton saveState;
     private JPanel calorieCounter;
 
+    //EFFECTS: Creates a new fitness app program
     public MainMenu(FitnessAppGUI fitnessAppGUI, String recentEvent) {
         this.fitnessAppGUI = fitnessAppGUI;
         this.setLayout(null);
@@ -48,6 +49,8 @@ public class MainMenu extends JPanel {
         addCalorieCounter();
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds a JLabel to the panel that represents the most recent action
     private void addRecentEvent(String event) {
         if (!event.equals("")) {
             JLabel recentEvent = new JLabel("Recent Event: " + event);
@@ -57,7 +60,8 @@ public class MainMenu extends JPanel {
         }
     }
 
-
+    //MODIFIES: this
+    //EFFECTS: adds the add food button to the panel
     private void addFoodButton() {
         addFood = new JButton("ADD FOODS");
         addFood.addActionListener(new AddFoodClickHandler());
@@ -66,6 +70,8 @@ public class MainMenu extends JPanel {
         this.add(addFood);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the view foods button to the panel
     private void addViewFoodButton() {
         viewFood = new JButton("VIEW FOODS");
         viewFood.addActionListener(new ViewFoodClickHandler());
@@ -74,6 +80,8 @@ public class MainMenu extends JPanel {
         this.add(viewFood);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the add exercise button to the panel
     private void addExerciseButton() {
         addExercise = new JButton("ADD EXERCISE");
         addExercise.addActionListener(new ExerciseClickHandler());
@@ -82,6 +90,8 @@ public class MainMenu extends JPanel {
         this.add(addExercise);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the view exercise button to the panel
     private void addViewExerciseButton() {
         viewExercise = new JButton("VIEW EXERCISE");
         viewExercise.addActionListener(new ViewExerciseClickHandler());
@@ -90,6 +100,8 @@ public class MainMenu extends JPanel {
         this.add(viewExercise);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the save state button to the panel
     private void addSaveStateButton() {
         saveState = new JButton("SAVE STATE");
         saveState.addActionListener(new SaveStateClickHandler());
@@ -98,6 +110,8 @@ public class MainMenu extends JPanel {
         this.add(saveState);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the calories counter to the panel
     private void addCalorieCounter() {
         calorieCounter = new JPanel();
         calorieCounter.setLayout(null);
@@ -109,6 +123,8 @@ public class MainMenu extends JPanel {
         this.add(calorieCounter);
     }
 
+    //MODIFIES: this
+    //EFFECTS: computes the calories and adds them to the calorie counter
     private void addMath() {
         Calculator calc = new Calculator();
         Person p = fitnessAppGUI.getPerson();
@@ -132,6 +148,8 @@ public class MainMenu extends JPanel {
         calorieCounter.add(remainingCal);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the mathematical operators to the calorie counter
     private void addOperations() {
         JLabel minus = new JLabel("-");
         JLabel plus = new JLabel("+");
@@ -147,6 +165,8 @@ public class MainMenu extends JPanel {
         calorieCounter.add(equals);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the labels to the calories counter
     private void addLabels() {
         JLabel goalCal = new JLabel("GOAL:");
         JLabel foodCal = new JLabel("FOODS:");

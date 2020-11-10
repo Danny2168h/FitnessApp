@@ -1,12 +1,14 @@
-package ui;
+package ui.menus;
 
 import model.FoodTypes;
+import ui.FitnessAppGUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents the menu that allows people to add foods to the foods eaten
 public class AddFoodMenu extends JPanel implements ActionListener {
 
     private static final int LABEL_X = 250;
@@ -26,24 +28,31 @@ public class AddFoodMenu extends JPanel implements ActionListener {
     private JLabel negativeInputs;
     private JLabel invalidInput;
 
+    //EFFECTS: Creates a new add food menu
     public AddFoodMenu(FitnessAppGUI fitnessAppGUI) {
         this.fitnessAppGUI = fitnessAppGUI;
         this.setLayout(null);
         this.setSize(FitnessAppGUI.FRAME_WIDTH, FitnessAppGUI.FRAME_HEIGHT);
         this.setLocation(0, 0);
         this.setBackground(Color.LIGHT_GRAY);
+
         JLabel title = new JLabel("Enter Details About Food Below:");
         title.setFont(new Font("Calibri", Font.BOLD, 35));
         title.setBounds(180, 10, 600, 100);
         this.add(title);
+
         addLabels();
         addInputFields();
+
         submit = new JButton("Submit");
         submit.setBounds(455, CALORIES_Y + 75, 90, 25);
         submit.addActionListener(this);
+
         this.add(submit);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds input fields into JPanel
     private void addInputFields() {
         name = new JTextField();
         name.setBounds(LABEL_X + 155, NAME_Y - 5, 140, 25);
@@ -70,6 +79,8 @@ public class AddFoodMenu extends JPanel implements ActionListener {
         this.add(calories);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds labels into JPanel
     private void addLabels() {
         makeLabels("Food Name: ", LABEL_X, NAME_Y);
         makeLabels("Food Type: ", LABEL_X, TYPE_Y);
@@ -78,6 +89,9 @@ public class AddFoodMenu extends JPanel implements ActionListener {
         makeLabels("Calories: ", LABEL_X, CALORIES_Y);
     }
 
+    //REQUIRES: x and y to both be non negative integers and not greater than size of JPanel
+    //MODIFIES: this
+    //EFFECTS: creates labels based on parameters
     private void makeLabels(String text, int x, int y) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Calibri", Font.BOLD, 20));
@@ -85,8 +99,9 @@ public class AddFoodMenu extends JPanel implements ActionListener {
         this.add(label);
     }
 
-    // MODIFIES: FitnessAppGUI
-    // EFFECTS: displays error message if inputs invalid, otherwise updates person field in FitnessAppGUI
+    // MODIFIES: this
+    // EFFECTS: processes button press, displays error message if inputs invalid or negative,
+    //          otherwise updates person field in FitnessAppGUI
     public void actionPerformed(ActionEvent e) {
         String foodMass = mass.getText();
         String foodCal = calories.getText();
@@ -108,6 +123,7 @@ public class AddFoodMenu extends JPanel implements ActionListener {
         this.repaint();
     }
 
+    //EFFECTS: produces true if calories and mass are both greater than 0 false otherwise
     private boolean checkValid(int mass, int calories) {
         if (mass <= 0 || calories <= 0) {
             if (!checkComponentContains(negativeInputs)) {
@@ -120,12 +136,15 @@ public class AddFoodMenu extends JPanel implements ActionListener {
         return true;
     }
 
-
+    //MODIFIES: this
+    //EFFECTS: removes all other error labels from JFrame
     private void removeAllOtherErrorLabels() {
         removeErrorLabel(negativeInputs);
         removeErrorLabel(invalidInput);
     }
 
+    //MODIFIES: this
+    //EFFECTS: passes user inputs into the FitnessAppGUI
     private void nextSteps() {
         String strName = name.getText();
         String strMass = mass.getText();
@@ -138,6 +157,7 @@ public class AddFoodMenu extends JPanel implements ActionListener {
         fitnessAppGUI.afterAddFood(strName, resolveType(foodTypeSelectedIndex), mass, mealTimeSelectedIndex, calories);
     }
 
+    //EFFECTS: converts FoodType into a string that represents the food type
     private FoodTypes resolveType(int foodTypeSelectedIndex) {
         if (foodTypeSelectedIndex == 0) {
             return FoodTypes.VEGETABLES_AND_FRUITS;
@@ -151,6 +171,7 @@ public class AddFoodMenu extends JPanel implements ActionListener {
         return null;
     }
 
+    //EFFECTS: Checks if a given label is currently being displayed on the panel
     private boolean checkComponentContains(JLabel label) {
         Component[] componentList = this.getComponents();
 
@@ -162,6 +183,8 @@ public class AddFoodMenu extends JPanel implements ActionListener {
         return false;
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes the given error label from the JPanel
     private void removeErrorLabel(JLabel label) {
         Component[] componentList = this.getComponents();
 

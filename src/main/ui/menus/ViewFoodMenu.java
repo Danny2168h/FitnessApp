@@ -1,10 +1,13 @@
-package ui;
+package ui.menus;
+
+import ui.FitnessAppGUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//represents the menu that allows users to choose which meal's foods to display
 public class ViewFoodMenu extends JPanel {
 
     private static final int BUTTON_WIDTH = 175;
@@ -21,6 +24,7 @@ public class ViewFoodMenu extends JPanel {
 
     private FitnessAppGUI fitnessAppGUI;
 
+    //EFFECTS: Creates new menu that lets user choose which meal's foods to display
     public ViewFoodMenu(FitnessAppGUI fitnessAppGUI) {
         this.fitnessAppGUI = fitnessAppGUI;
         this.setLayout(null);
@@ -31,13 +35,15 @@ public class ViewFoodMenu extends JPanel {
         title.setBounds(255, 80, 300, 50);
         title.setFont(new Font("Calibri", Font.BOLD, 25));
         this.add(title);
-        addButton1();
-        addButton2();
-        addButton3();
-        addButton4();
+        addBreakfastButton();
+        addLunchButton();
+        addDinnerButton();
+        addSnacksButton();
         addReturnMain();
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds button that lets user return to main menu to panel
     private void addReturnMain() {
         returnMain = new JButton("Return to Main Menu");
         returnMain.addActionListener(new ReturnMainMenuClickHandler());
@@ -47,7 +53,9 @@ public class ViewFoodMenu extends JPanel {
         this.add(returnMain);
     }
 
-    private void addButton1() {
+    //MODIFIES: this
+    //EFFECTS: adds button that lets user select breakfast
+    private void addBreakfastButton() {
         breakfast = new JButton("Breakfast");
         breakfast.addActionListener(new BreakfastClickHandler());
         breakfast.setBounds(CENTER_BUTTON, TOP_OFFSET, BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -55,7 +63,9 @@ public class ViewFoodMenu extends JPanel {
         this.add(breakfast);
     }
 
-    private void addButton2() {
+    //MODIFIES: this
+    //EFFECTS: adds button that lets user select lunch
+    private void addLunchButton() {
         lunch = new JButton("Lunch");
         lunch.addActionListener(new LunchClickHandler());
         lunch.setBounds(CENTER_BUTTON, TOP_OFFSET + GAP + BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -63,7 +73,9 @@ public class ViewFoodMenu extends JPanel {
         this.add(lunch);
     }
 
-    private void addButton3() {
+    //MODIFIES: this
+    //EFFECTS: adds button that lets user select dinner
+    private void addDinnerButton() {
         dinner = new JButton("Dinner");
         dinner.addActionListener(new DinnerClickHandler());
         dinner.setBounds(CENTER_BUTTON, TOP_OFFSET + 2 * GAP + 2 * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -71,7 +83,9 @@ public class ViewFoodMenu extends JPanel {
         this.add(dinner);
     }
 
-    private void addButton4() {
+    //MODIFIES: this
+    //EFFECTS: adds button that lets user select snacks
+    private void addSnacksButton() {
         snacks = new JButton("Snacks");
         snacks.addActionListener(new SnacksClickHandler());
         snacks.setBounds(CENTER_BUTTON, TOP_OFFSET + 3 * GAP + 3 * BUTTON_HEIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -125,7 +139,7 @@ public class ViewFoodMenu extends JPanel {
 
     private class ReturnMainMenuClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
-        // EFFECTS: opens up pop up window to display snack foods
+        // EFFECTS: brings user back to the main menu
         //
         @Override
         public void actionPerformed(ActionEvent e) {

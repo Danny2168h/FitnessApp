@@ -1,10 +1,13 @@
-package ui;
+package ui.menus;
+
+import ui.FitnessAppGUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents the menu that allows user to input thier info to create a new account
 public class CreateAccountMenu extends JPanel implements ActionListener {
 
     private static final int LABEL_X = 250;
@@ -20,6 +23,7 @@ public class CreateAccountMenu extends JPanel implements ActionListener {
     private JLabel negativeWeight;
     private JLabel invalidWeight;
 
+    //EFFECTS: creates a new create account menu
     public CreateAccountMenu(FitnessAppGUI fitnessAppGUI) {
         this.fitnessAppGUI = fitnessAppGUI;
         this.setLayout(null);
@@ -38,13 +42,14 @@ public class CreateAccountMenu extends JPanel implements ActionListener {
         this.add(submit);
     }
 
+    //MODIFIES: this
+    //EFFECTS: Adds user inputs fields into JFrame.
     private void addInputFields() {
         name = new JTextField();
         name.setBounds(LABEL_X + 155, NAME_Y - 5, 120, 25);
 
         String[] choices = {"Male", "Female"};
         sex = new JComboBox(choices);
-        //sex.setLayout(null);
         sex.setBounds(LABEL_X + 155, SEX_Y - 5, 60, 25);
 
         weight = new JTextField();
@@ -54,12 +59,17 @@ public class CreateAccountMenu extends JPanel implements ActionListener {
         this.add(weight);
     }
 
+    //MODIFIES: this
+    //EFFECTS: Adds labels to user input fields
     private void addLabels() {
         makeLabels("First Name: ", LABEL_X, NAME_Y);
         makeLabels("Sex/Gender: ", LABEL_X, SEX_Y);
         makeLabels("Weight (KG): ", LABEL_X, WEIGHT_Y);
     }
 
+    //REQUIRES: x and y to be positive integer values that are no larger than size of JFrame
+    //MODIFIES: this
+    //EFFECTS: Adds labels to user input fields
     private void makeLabels(String text, int x, int y) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Calibri", Font.BOLD, 20));
@@ -67,8 +77,9 @@ public class CreateAccountMenu extends JPanel implements ActionListener {
         this.add(label);
     }
 
-    // MODIFIES: FitnessAppGUI
-    // EFFECTS: displays error message if inputs invalid, otherwise updates person field in FitnessAppGUI
+    // MODIFIES: this
+    // EFFECTS: processes button press, displays error message if inputs invalid or negative,
+    //          otherwise updates person field in FitnessAppGUI
     public void actionPerformed(ActionEvent e) {
         String userInput = weight.getText();
         try {
@@ -95,20 +106,22 @@ public class CreateAccountMenu extends JPanel implements ActionListener {
         this.repaint();
     }
 
+    //REQUIRES: valid inputs for weight
+    //MODIFIES: this
+    //EFFECTS: passes user inputs into FitnessAppGui
     private void nextSteps() {
         String strWeight = weight.getText();
         int weight = Integer.parseInt(strWeight);
         String strName = name.getText();
         int sexSelectedIndex = sex.getSelectedIndex();
-        System.out.println("point a");
         boolean sex = true;
         if (sexSelectedIndex == 1) {
-            System.out.println("female");
             sex = false;
         }
         fitnessAppGUI.afterCreateAccount(weight, sex, strName);
     }
 
+    //EFFECTS: Checks if a given label is currently being displayed on the panel
     private boolean checkComponentContains(JLabel label) {
         Component[] componentList = this.getComponents();
 
@@ -120,6 +133,8 @@ public class CreateAccountMenu extends JPanel implements ActionListener {
         return false;
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes the given error label from the JPanel
     private void removeErrorLabel(JLabel label) {
         Component[] componentList = this.getComponents();
 

@@ -1,13 +1,15 @@
-package ui;
+package ui.menus;
 
 import model.Calculator;
 import model.Person;
+import ui.FitnessAppGUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//represents menu that allows user to set their goals
 public class SetGoalMenu extends JPanel implements ActionListener {
 
     private static final int LABEL_X = 220;
@@ -22,6 +24,7 @@ public class SetGoalMenu extends JPanel implements ActionListener {
     private JLabel dietUnSafe;
     private JButton submit;
 
+    //EFFECTS: creates new set goal menu
     public SetGoalMenu(FitnessAppGUI fitnessAppGUI) {
         this.fitnessAppGUI = fitnessAppGUI;
         this.setLayout(null);
@@ -40,6 +43,8 @@ public class SetGoalMenu extends JPanel implements ActionListener {
         this.add(submit);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the input fields to the panel
     private void addInputFields() {
         goalWeight = new JTextField();
         goalWeight.setBounds(LABEL_X + 205, GOALWEIGHT_Y - 5, 140, 25);
@@ -51,11 +56,16 @@ public class SetGoalMenu extends JPanel implements ActionListener {
         this.add(time);
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the labels to the panel
     private void addLabels() {
         makeLabels("Goal Weight (KG): ", LABEL_X, GOALWEIGHT_Y);
         makeLabels("Days To Achieve Goal: ", LABEL_X, TIME_Y);
     }
 
+    //REQUIRES: x and y > 0 and also in bounds of size of panel
+    //MODIFIES: this
+    //EFFECTS: adds the labels to the panel
     private void makeLabels(String text, int x, int y) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Calibri", Font.BOLD, 20));
@@ -63,8 +73,9 @@ public class SetGoalMenu extends JPanel implements ActionListener {
         this.add(label);
     }
 
-    // MODIFIES: FitnessAppGUI
-    // EFFECTS: displays error message if inputs invalid, otherwise updates person field in FitnessAppGUI
+    // MODIFIES: this
+    // EFFECTS: processes button press, displays error message if inputs invalid or negative,
+    //          otherwise updates person field in FitnessAppGUI
     public void actionPerformed(ActionEvent e) {
         String strCalories = goalWeight.getText();
         String strTime = time.getText();
@@ -88,6 +99,8 @@ public class SetGoalMenu extends JPanel implements ActionListener {
         this.repaint();
     }
 
+    //REQUIRES: person must not have 0 for weight or goal weight
+    //EFFECTS: checks safety of persons given diet plan
     private boolean checkSafety() {
         Calculator calc = new Calculator();
         Person p = fitnessAppGUI.getPerson();
@@ -104,6 +117,8 @@ public class SetGoalMenu extends JPanel implements ActionListener {
         return true;
     }
 
+    //MODIFIES: this
+    //EFFECTS: checks if calories and time are negative or 0
     private boolean checkValid(int calories, int time) {
         if (time <= 0 || calories <= 0) {
             if (!checkComponentContains(negativeInputs)) {
@@ -116,13 +131,16 @@ public class SetGoalMenu extends JPanel implements ActionListener {
         return true;
     }
 
-
+    //MODIFIES: this
+    //EFFECTS: removes all error labels
     private void removeAllOtherErrorLabels() {
         removeErrorLabel(negativeInputs);
         removeErrorLabel(invalidInput);
         removeErrorLabel(dietUnSafe);
     }
 
+    //MODIFIES: this
+    //EFFECTS: passes user inputs into FitnessAppGUI
     private void nextSteps() {
         String strGoalWeight = goalWeight.getText();
         int goalWeight = Integer.parseInt(strGoalWeight);
@@ -132,7 +150,7 @@ public class SetGoalMenu extends JPanel implements ActionListener {
         fitnessAppGUI.afterSetGoal(goalWeight, timeNum);
     }
 
-
+    //EFFECTS: Checks if a given label is currently being displayed on the panel
     private boolean checkComponentContains(JLabel label) {
         Component[] componentList = this.getComponents();
 
@@ -144,6 +162,8 @@ public class SetGoalMenu extends JPanel implements ActionListener {
         return false;
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes the given error label from the JPanel
     private void removeErrorLabel(JLabel label) {
         Component[] componentList = this.getComponents();
 

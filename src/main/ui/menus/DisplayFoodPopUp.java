@@ -1,7 +1,8 @@
-package ui;
+package ui.menus;
 
 import model.Food;
 import model.FoodTypes;
+import ui.FitnessAppGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +11,14 @@ import java.util.List;
 //Grid bag constraint code learned and sourced partially 
 //from https://youtu.be/YKaea4ezQQE
 
+//Represents popup that displays all foods eaten in the given time of day
 public class DisplayFoodPopUp extends JDialog {
 
     private FitnessAppGUI fitnessAppGUI;
     private static List<Food> foods;
     private GridBagConstraints gc;
-    
+
+    //EFFECTS: Creates a new popup menu that represents the foods eaten
     public DisplayFoodPopUp(FitnessAppGUI fitnessAppGUI, List<Food> foods, String time) {
         this.fitnessAppGUI = fitnessAppGUI;
         this.foods = foods;
@@ -30,6 +33,8 @@ public class DisplayFoodPopUp extends JDialog {
         setConstraints();
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets grid bag constraints and adds foods in correct positions on dialog window
     private void setConstraints() {
         gc = new GridBagConstraints();
         gc.weightx = 1.5;
@@ -38,6 +43,8 @@ public class DisplayFoodPopUp extends JDialog {
         loopFoods();
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds each food to the dialog window
     private void loopFoods() {
         int y = 1;
         for (Food f : foods) {
@@ -65,6 +72,7 @@ public class DisplayFoodPopUp extends JDialog {
         }
     }
 
+    //EFFECTS: converts FoodType to a string that represents the type
     private String typeToString(FoodTypes type) {
         if (type.equals(FoodTypes.VEGETABLES_AND_FRUITS)) {
             return "Vegetables and Fruits";
@@ -78,6 +86,8 @@ public class DisplayFoodPopUp extends JDialog {
         return "";
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets up the titles for the table
     private void titleSetUp() {
         JLabel name = new JLabel("Name: ");
         gc.gridx = 0;
