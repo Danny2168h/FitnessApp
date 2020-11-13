@@ -33,7 +33,7 @@ public class ConfirmSave extends JDialog implements ActionListener {
 
     @Override
     //MODIFIES: this
-    // EFFECTS: processes button press, disposes of dialog window then updates person field in FitnessAppGUI
+    //EFFECTS: processes button press, disposes of dialog window then updates person field in FitnessAppGUI
     public void actionPerformed(ActionEvent e) {
         this.dispose();
         fitnessAppGUI.afterSaveState();

@@ -208,6 +208,8 @@ public class MainMenu extends JPanel {
     }
 
     //idea for action handler sourced from complete shape player project provided by CPSC 210
+
+    //class represents action handler that handles user inputs for when user clicks add food
     private class AddFoodClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: takes user to add food menu
@@ -219,6 +221,7 @@ public class MainMenu extends JPanel {
 
     }
 
+    //class represents action handler that handles user inputs for when user clicks view exercise
     private class ViewFoodClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: takes user to view foods menu
@@ -230,6 +233,7 @@ public class MainMenu extends JPanel {
 
     }
 
+    //class represents action handler that handles user inputs for when user clicks add exercise
     private class ExerciseClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: takes user to add exercise menu
@@ -241,6 +245,7 @@ public class MainMenu extends JPanel {
 
     }
 
+    //class represents action handler that handles user inputs for when user clicks view exercise
     private class ViewExerciseClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: takes user to view all exercises they have stores
@@ -252,6 +257,7 @@ public class MainMenu extends JPanel {
 
     }
 
+    //class represents action handler that handles user inputs for when user clicks save button
     private class SaveStateClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: prompts user to save state

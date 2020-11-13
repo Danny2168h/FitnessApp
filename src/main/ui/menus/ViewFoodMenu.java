@@ -95,6 +95,8 @@ public class ViewFoodMenu extends JPanel {
 
 
     //idea for action handler sourced from complete shape player project provided by CPSC 210
+
+    //class represents action handler that handles user inputs for when user clicks breakfast button
     private class BreakfastClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: opens pop up window to display breakfast foods
@@ -106,6 +108,7 @@ public class ViewFoodMenu extends JPanel {
 
     }
 
+    //class represents action handler that handles user inputs for when user clicks lunch button
     private class LunchClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: opens up pop up window to display lunch foods
@@ -117,6 +120,7 @@ public class ViewFoodMenu extends JPanel {
 
     }
 
+    //class represents action handler that handles user inputs for when user clicks dinner button
     private class DinnerClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: opens up pop up window to display dinner foods
@@ -128,6 +132,7 @@ public class ViewFoodMenu extends JPanel {
 
     }
 
+    //class represents action handler that handles user inputs for when user clicks snacks button
     private class SnacksClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: opens up pop up window to display snack foods
@@ -138,6 +143,7 @@ public class ViewFoodMenu extends JPanel {
         }
     }
 
+    //class represents action handler that handles user inputs for when user clicks return to main button
     private class ReturnMainMenuClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: brings user back to the main menu
