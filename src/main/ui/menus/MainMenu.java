@@ -14,10 +14,9 @@ public class MainMenu extends JPanel {
 
     private static final int BUTTON_WIDTH = 175;
     private static final int BUTTON_HEIGHT = BUTTON_WIDTH - 50;
-    private static final int CENTER = FitnessAppGUI.FRAME_WIDTH / 2 - BUTTON_WIDTH / 2;
     private static final int FONT_SIZE = 20;
 
-    private FitnessAppGUI fitnessAppGUI;
+    private final FitnessAppGUI fitnessAppGUI;
     private JButton addFood;
     private JButton viewFood;
     private JButton addExercise;
@@ -31,15 +30,8 @@ public class MainMenu extends JPanel {
         this.setLayout(null);
         this.setSize(FitnessAppGUI.FRAME_WIDTH, FitnessAppGUI.FRAME_HEIGHT);
         this.setLocation(0, 0);
-        this.setBackground(Color.lightGray);
-        JLabel name = new JLabel("Account Holder: " + fitnessAppGUI.getPerson().getName());
-        name.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE - 4));
-        name.setBounds(75,10, 800, 20);
-        this.add(name);
-        JLabel title = new JLabel("FITNESS APP: MAIN MENU");
-        title.setFont(new Font("Calibri", Font.ITALIC, FONT_SIZE + 10));
-        title.setBounds(75,40, 800, 50);
-        this.add(title);
+        addAccountName(fitnessAppGUI);
+        addTitle();
         addRecentEvent(recentEvent);
         addFoodButton();
         addViewFoodButton();
@@ -47,6 +39,34 @@ public class MainMenu extends JPanel {
         addViewExerciseButton();
         addSaveStateButton();
         addCalorieCounter();
+        addBackground();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds account name label to panel
+    private void addAccountName(FitnessAppGUI fitnessAppGUI) {
+        JLabel name = new JLabel("Account Holder: " + fitnessAppGUI.getPerson().getName());
+        name.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE - 4));
+        name.setBounds(75,10, 800, 20);
+        this.add(name);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds main title label to panel
+    private void addTitle() {
+        JLabel title = new JLabel("FITNESS APP: MAIN MENU");
+        title.setFont(new Font("Calibri", Font.ITALIC, FONT_SIZE + 13));
+        title.setBounds(75,40, 800, 50);
+        this.add(title);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds background image to the panel
+    private void addBackground() {
+        ImageIcon background = new ImageIcon("./data/windows1080.jpg");
+        JLabel backgroundImage = new JLabel(background);
+        backgroundImage.setBounds(0,0,FitnessAppGUI.FRAME_WIDTH, FitnessAppGUI.FRAME_HEIGHT);
+        this.add(backgroundImage);
     }
 
     //MODIFIES: this
@@ -54,8 +74,9 @@ public class MainMenu extends JPanel {
     private void addRecentEvent(String event) {
         if (!event.equals("")) {
             JLabel recentEvent = new JLabel("Recent Event: " + event);
-            recentEvent.setFont(new Font("Calibri", Font.ITALIC, FONT_SIZE));
-            recentEvent.setBounds(250, 590, 400, 20);
+            recentEvent.setFont(new Font("Calibri", Font.ITALIC, FONT_SIZE + 5));
+            recentEvent.setForeground(Color.white);
+            recentEvent.setBounds(215, 580, 800, 30);
             this.add(recentEvent);
         }
     }

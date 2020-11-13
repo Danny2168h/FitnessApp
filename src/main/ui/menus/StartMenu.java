@@ -34,6 +34,10 @@ public class StartMenu extends JPanel {
         this.setSize(FitnessAppGUI.FRAME_WIDTH, FitnessAppGUI.FRAME_HEIGHT);
         this.setLocation(0, 0);
         this.setBackground(Color.lightGray);
+        JLabel title = new JLabel("Please Select an Account");
+        title.setFont(new Font("Calibri", Font.BOLD, 35));
+        title.setBounds(214, 50, 375, 100);
+        this.add(title);
         try {
             addButtonAcc1();
             addButtonAcc2();

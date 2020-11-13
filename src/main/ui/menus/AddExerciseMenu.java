@@ -16,7 +16,7 @@ public class AddExerciseMenu extends JPanel implements ActionListener {
     private static final int CALORIES_Y = NAME_Y + 75;
     private static final int TIME_Y = CALORIES_Y + 75;
 
-    private FitnessAppGUI fitnessAppGUI;
+    private final FitnessAppGUI fitnessAppGUI;
     private JTextField name;
     private JTextField time;
     private JTextField calories;
