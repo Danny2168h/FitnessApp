@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//Represents the menu that allows user to input thier info to create a new account
+//Represents the menu that allows user to input their info to create a new account
 public class CreateAccountMenu extends JPanel implements ActionListener {
 
     private static final int LABEL_X = 250;

@@ -94,6 +94,7 @@ public class ViewFoodMenu extends JPanel {
     }
 
 
+    //idea for action handler sourced from complete shape player project provided by CPSC 210
     private class BreakfastClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: opens pop up window to display breakfast foods

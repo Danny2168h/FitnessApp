@@ -207,7 +207,7 @@ public class MainMenu extends JPanel {
         calorieCounter.add(remainingCal);
     }
 
-
+    //idea for action handler sourced from complete shape player project provided by CPSC 210
     private class AddFoodClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: takes user to add food menu

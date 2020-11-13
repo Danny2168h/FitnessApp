@@ -100,6 +100,7 @@ public class StartMenu extends JPanel {
         }
     }
 
+    //idea for action handler sourced from complete shape player project provided by CPSC 210
     private class Acc1ClickHandler implements ActionListener {
         // MODIFIES: FitnessAppGUI
         // EFFECTS: Changes field accNumber in fitnessAPPGUI to reflect acc 1
