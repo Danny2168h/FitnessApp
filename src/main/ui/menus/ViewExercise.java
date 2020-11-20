@@ -75,7 +75,7 @@ public class ViewExercise extends JDialog {
         gc.gridy = 0;
         add(calories, gc);
 
-        JLabel type = new JLabel("Time: ");
+        JLabel type = new JLabel("Time (mins): ");
         gc.gridx = 2;
         gc.gridy = 0;
         add(type, gc);
