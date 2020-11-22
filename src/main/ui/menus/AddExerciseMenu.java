@@ -83,6 +83,7 @@ public class AddExerciseMenu extends JPanel implements ActionListener {
         this.add(label);
     }
 
+    @Override
     // MODIFIES: this
     // EFFECTS: processes button press, displays error message if inputs invalid or negative,
     //          otherwise updates person field in FitnessAppGUI

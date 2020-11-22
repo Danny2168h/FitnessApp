@@ -47,3 +47,9 @@ What the app should be able to do:
 account.
 - The user upon starting the program, will be allowed to load 1 out of 3 different account slots that contain 
 information.
+
+## PHASE 4
+
+For task 2 of phase 4 I choose to include a type hierarchy in my code. The classes: AddExerciseMenu, AddFoodMenu, 
+CreateAccountMenu and SetGoalMenu implement the ActionListener interface and each override the ActionPerformed abstract
+method from the interface and provide different/unique implementations across the classes.
