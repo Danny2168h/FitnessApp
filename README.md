@@ -51,5 +51,28 @@ information.
 ## PHASE 4
 
 For task 2 of phase 4 I choose to include a type hierarchy in my code. The classes: AddExerciseMenu, AddFoodMenu, 
-CreateAccountMenu and SetGoalMenu implement the ActionListener interface and each override the ActionPerformed abstract
+CreateAccountMenu and SetGoalMenu implement the Java ActionListener interface and each override the ActionPerformed abstract
 method from the interface and provide different/unique implementations across the classes.
+
+## Phase 4: Task 3
+Reflection on overall project design
+***Changes that I would make to my project***
+- In my console based UI there are multiple methods that do the same thing and have the overall same implementation,
+but only differ in a very small area. I could have abstracted away the behaviour into a helper method, to improve readability.
+
+- As I had constructed a class to represent each menu in my GUI, some menus had much the same functionality, it would
+have been more optimal to create a type hierarchy with a more abstract menu and each class could extend the abstract menu
+to reduce code duplication and semantic coupling (for example like fonts and font sizes across different menus).
+
+- The calculator class is not very cohesive, for example it is responsible for checking diet safety, calculating daily
+calories and is also responsible for making recommendations. To improve cohesion each of these functions could be refactored
+into their individual classes.
+
+- I could have made use of more static constants more within my GUI code, for reasons of single point of control. As an example,
+in my GUI I would have to modify each button's x and y coordinates to move the buttons to a different area on the panel. 
+If I had made more use of static constants within my code, this would improve the ease of modification to my code in the 
+future.
+
+- Both food and exercise share some similar behaviour, such as having fields like name and calories. Introducing an
+abstract superclass that had protected fields like name and calories with their respective setters and getters would 
+have been optimal to improve overall readability and reduce redundancy in code.
