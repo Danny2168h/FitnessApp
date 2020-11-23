@@ -2,6 +2,7 @@ package ui.menus;
 
 import model.Calculator;
 import model.Person;
+import model.exceptions.InvalidPersonException;
 import ui.FitnessAppGUI;
 
 import javax.swing.*;
@@ -149,7 +150,11 @@ public class MainMenu extends JPanel {
     private void addMath() {
         Calculator calc = new Calculator();
         Person p = fitnessAppGUI.getPerson();
-        p.setDailyRecCalories(calc.calcDailyCal(p));
+        try {
+            p.setDailyRecCalories(calc.calcDailyCal(p));
+        } catch (InvalidPersonException e) {
+            p.setDailyRecCalories(1500);
+        }
         JLabel goalCal = new JLabel(String.valueOf((int) p.getDailyRecCalories()));
         JLabel foodCal =  new JLabel(String.valueOf(calc.foodCalCalc(p)));
         JLabel exerciseCal = new JLabel(String.valueOf(calc.exerciseCalCalc(p)));
@@ -163,6 +168,12 @@ public class MainMenu extends JPanel {
         foodCal.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE - 3));
         exerciseCal.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE - 3));
         remainingCal.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE - 3));
+        addCalorieNumbers(goalCal, foodCal, exerciseCal, remainingCal);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds the given Labels to the calorie counter panel
+    private void addCalorieNumbers(JLabel goalCal, JLabel foodCal, JLabel exerciseCal, JLabel remainingCal) {
         calorieCounter.add(goalCal);
         calorieCounter.add(foodCal);
         calorieCounter.add(exerciseCal);
@@ -201,10 +212,7 @@ public class MainMenu extends JPanel {
         foodCal.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE - 3));
         exerciseCal.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE - 3));
         remainingCal.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE - 3));
-        calorieCounter.add(goalCal);
-        calorieCounter.add(foodCal);
-        calorieCounter.add(exerciseCal);
-        calorieCounter.add(remainingCal);
+        addCalorieNumbers(goalCal, foodCal, exerciseCal, remainingCal);
     }
 
     //idea for action handler sourced from complete shape player project provided by CPSC 210

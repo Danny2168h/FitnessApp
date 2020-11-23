@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.InvalidPersonException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +26,51 @@ public class CalculatorTest {
         advice = "For a balanced diet, half of what you eat should be grains, a quarter should be proteins "
                 + "and another quarter should be fruits and veggies"
                 + "\nBelow are a list of suggestions to improve your diet:";
+    }
+
+    @Test
+    void testCheckDietSafetyInvalidPerson() {
+        person.setStartWeight(0);
+        person.setGoalWeight(0);
+        person.setGoalDays(0);
+
+        //Testing Female, maintain weight
+        person.setFemale();
+        assertFalse(calc.checkDietSafety(person));
+
+        //Testing Male, maintain weight
+        person.setMale();
+        assertFalse(calc.checkDietSafety(person));
+    }
+
+    @Test
+    void testCheckDietSafetyInvalidPersonBadStartWeight() {
+        person.setGoalDays(2);
+        person.setStartWeight(-2);
+        person.setGoalWeight(1);
+
+        //Testing Female, maintain weight
+        person.setFemale();
+        assertFalse(calc.checkDietSafety(person));
+
+        //Testing Male, maintain weight
+        person.setMale();
+        assertFalse(calc.checkDietSafety(person));
+    }
+
+    @Test
+    void testCheckDietSafetyInvalidPersonBadGoalWeight() {
+        person.setGoalDays(2);
+        person.setStartWeight(2);
+        person.setGoalWeight(0);
+
+        //Testing Female, maintain weight
+        person.setFemale();
+        assertFalse(calc.checkDietSafety(person));
+
+        //Testing Male, maintain weight
+        person.setMale();
+        assertFalse(calc.checkDietSafety(person));
     }
 
     @Test
@@ -121,11 +167,23 @@ public class CalculatorTest {
         double calorieDeficit = calc.ONE_KG_FAT_CALORIES * (person.getStartWeight() - person.getGoalWeight());
         double dailyCalorie = calorieDeficit / person.getGoalDays();
         person.setFemale();
-        assertEquals(calc.NORMAL_CALORIE_FOR_FEMALE - dailyCalorie, calc.calcDailyCal(person));
+        Double calories = 0.0;
+         try {
+            calories = calc.calcDailyCal(person);
+        } catch (InvalidPersonException e) {
+            fail("Exception should not have been thrown");
+        }
+        assertEquals(calc.NORMAL_CALORIE_FOR_FEMALE - dailyCalorie, calories);
 
         //Testing Male, lose weight but safe
         person.setMale();
-        assertEquals(calc.NORMAL_CALORIE_FOR_MALE - dailyCalorie, calc.calcDailyCal(person));
+        calories = 0.0;
+        try {
+            calories = calc.calcDailyCal(person);
+        } catch (InvalidPersonException e) {
+            fail("Exception should not have been thrown");
+        }
+        assertEquals(calc.NORMAL_CALORIE_FOR_MALE - dailyCalorie, calories);
     }
 
     @Test
@@ -138,11 +196,101 @@ public class CalculatorTest {
         double calorieDeficit = calc.ONE_KG_FAT_CALORIES * (person.getStartWeight() - person.getGoalWeight());
         double dailyCalorie = calorieDeficit / person.getGoalDays();
         person.setFemale();
-        assertEquals(calc.NORMAL_CALORIE_FOR_FEMALE - dailyCalorie, calc.calcDailyCal(person));
+        Double calories = 0.0;
+        try {
+            calories = calc.calcDailyCal(person);
+        } catch (InvalidPersonException e) {
+            fail("Exception should not have been thrown");
+        }
+        assertEquals(calc.NORMAL_CALORIE_FOR_FEMALE - dailyCalorie, calories);
 
         //Testing Male, lose weight but safe
         person.setMale();
-        assertEquals(calc.NORMAL_CALORIE_FOR_MALE - dailyCalorie, calc.calcDailyCal(person));
+        calories = 0.0;
+        try {
+            calories = calc.calcDailyCal(person);
+        } catch (InvalidPersonException e) {
+            fail("Exception should not have been thrown");
+        }
+        assertEquals(calc.NORMAL_CALORIE_FOR_MALE - dailyCalorie, calories);
+    }
+
+    @Test
+    void testCalcDailyCalInvalidPersonBadGoalDays() {
+
+        //Testing Female, calc calorie lose weight
+        person.setGoalDays(0);
+        person.setGoalWeight(110);
+        person.setStartWeight(100);
+
+        person.setFemale();
+        try {
+            calc.calcDailyCal(person);
+            fail("Exception should have been thrown");
+        } catch (InvalidPersonException e) {
+            //pass
+        }
+
+        //Testing Male
+        person.setMale();
+        try {
+            calc.calcDailyCal(person);
+            fail("Exception should have been thrown");
+        } catch (InvalidPersonException e) {
+            //pass
+        }
+    }
+
+    @Test
+    void testCalcDailyCalInvalidPersonBadGoalWeight() {
+
+        //Testing Female, calc calorie lose weight
+        person.setGoalDays(10);
+        person.setGoalWeight(0);
+        person.setStartWeight(100);
+
+        person.setFemale();
+        try {
+            calc.calcDailyCal(person);
+            fail("Exception should have been thrown");
+        } catch (InvalidPersonException e) {
+            //pass
+        }
+
+        //Testing Male
+        person.setMale();
+        try {
+            calc.calcDailyCal(person);
+            fail("Exception should have been thrown");
+        } catch (InvalidPersonException e) {
+            //pass
+        }
+    }
+
+    @Test
+    void testCalcDailyCalInvalidPersonBadStartWeight() {
+
+        //Testing Female, calc calorie lose weight
+        person.setGoalDays(10);
+        person.setGoalWeight(110);
+        person.setStartWeight(0);
+
+        person.setFemale();
+        try {
+            calc.calcDailyCal(person);
+            fail("Exception should have been thrown");
+        } catch (InvalidPersonException e) {
+            //pass
+        }
+
+        //Testing Male
+        person.setMale();
+        try {
+            calc.calcDailyCal(person);
+            fail("Exception should have been thrown");
+        } catch (InvalidPersonException e) {
+            //pass
+        }
     }
 
     @Test
@@ -322,7 +470,3 @@ public class CalculatorTest {
     }
 
 }
-
-
-
-

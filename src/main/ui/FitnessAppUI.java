@@ -5,6 +5,7 @@ import model.Exercise;
 import model.Food;
 import model.FoodTypes;
 import model.Person;
+import model.exceptions.InvalidPersonException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -654,8 +655,11 @@ public class FitnessAppUI {
             cmd1 = input.nextInt();
             person.setGoalDays(cmd1);
         }
-        Double cal = calc.calcDailyCal(person);
-        person.setDailyRecCalories(cal);
-        System.out.println("Your daily calorie goal has been set to: " + cal + " calories.");
+        try {
+            person.setDailyRecCalories(calc.calcDailyCal(person));
+        } catch (InvalidPersonException e) {
+            person.setDailyRecCalories(1500);
+        }
+        System.out.println("Your daily calorie goal has been set to: " + person.getDailyRecCalories() + " calories.");
     }
 }

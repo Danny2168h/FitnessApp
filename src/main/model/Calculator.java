@@ -1,6 +1,9 @@
 package model;
 
 
+import model.exceptions.InvalidMassException;
+import model.exceptions.InvalidPersonException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +23,13 @@ public class Calculator {
     public static final double RATIO_OF_PROTEINS = 0.25;
     public static final double MAX_AMOUNT_OF_OTHERS = 100;
 
-    //REQUIRES: Person must have goal days > 0 and non negative inputs for start weight and goal weight
-    //EFFECTS: calculates diet safety given minimum daily calorie and produces true if diet is safe false otherwise
+
+    //EFFECTS: calculates diet safety given minimum daily calorie and produces true if diet is safe false otherwise.
+    //         will also produce false if person has invalid fields.
     public boolean checkDietSafety(Person p) {
+        if (p.getGoalDays() <= 0 || p.getGoalWeight() <= 0 || p.getStartWeight() <= 0) {
+            return false;
+        }
         if (p.getGoalWeight() >= p.getStartWeight()) {
             return true;
         } else {
@@ -37,9 +44,12 @@ public class Calculator {
         }
     }
 
-    //REQUIRES: Person must have goal days > 0 and non negative inputs for start weight and goal weight
-    //EFFECTS: calculates the users daily allotted calories to achieve goal in timeframe set by user
-    public Double calcDailyCal(Person p) {
+    //EFFECTS: calculates the users daily allotted calories to achieve goal in timeframe set by user. Return 0 if
+    //         person has invalid fields.
+    public Double calcDailyCal(Person p) throws InvalidPersonException {
+        if (p.getGoalDays() <= 0 || p.getGoalWeight() <= 0 || p.getStartWeight() <= 0) {
+            throw new InvalidPersonException();
+        }
         double calorieDeficit = ONE_KG_FAT_CALORIES * (p.getStartWeight() - p.getGoalWeight());
         double dailyCalorie = calorieDeficit / p.getGoalDays();
 
@@ -103,16 +113,19 @@ public class Calculator {
             }
         }
         double total = grainsMass + proteinMass + vegAndFruitMass;
-        if (total == 0) {
+        try {
+            return makeRecommendDiet(grainsMass, proteinMass, vegAndFruitMass, othersMass, total);
+        } catch (InvalidMassException invalidMass) {
             return "no data for diet recommendations";
         }
-        return makeRecommendDiet(grainsMass, proteinMass, vegAndFruitMass, othersMass, total);
     }
 
-    //REQUIRES: total mass of all foods must be greater than 0
     //EFFECTS: returns string that is the recommendation for users diet
     private String makeRecommendDiet(double grainsMass, double proteinMass, double vegAndFruitMass, double othersMass,
-                                     double total) {
+                                     double total) throws InvalidMassException {
+        if (total == 0) {
+            throw new InvalidMassException();
+        }
         String recommendations = advice();
         if ((RATIO_OF_GRAINS + 0.1) >= grainsMass / total && (RATIO_OF_GRAINS - 0.1) <= grainsMass / total) {
             recommendations = recommendations.concat("\n Great balance of grains in diet! Keep it up!");
@@ -130,6 +143,12 @@ public class Calculator {
         } else {
             recommendations = recommendations.concat("\n your diet needs a better balance of protein");
         }
+        return finalRecommend(othersMass, recommendations);
+    }
+
+
+    //EFFECTS: appends final recommendation onto end of recommendations and returns it
+    private String finalRecommend(double othersMass, String recommendations) {
         if (othersMass >= MAX_AMOUNT_OF_OTHERS) {
             recommendations = recommendations.concat("\n Please consider eating less foods in 'other' category");
         } else {

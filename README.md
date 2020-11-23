@@ -50,9 +50,10 @@ information.
 
 ## PHASE 4
 
-For task 2 of phase 4 I choose to include a type hierarchy in my code. The classes: AddExerciseMenu, AddFoodMenu, 
-CreateAccountMenu and SetGoalMenu implement the Java ActionListener interface and each override the ActionPerformed abstract
-method from the interface and provide different/unique implementations across the classes.
+For task 2 of phase 4 I choose to test and design a class that is robust in the model package. The class that is robust
+is the calculator class. All methods in the class account for all possible inputs, and the method calcDailyCal throws a
+checked exception called InvalidPersonException. The tests for when an exception is expected and when it is not is
+included in the CalculatorTestClass.
 
 ## Phase 4: Task 3
 Reflection on overall project design
