@@ -45,7 +45,7 @@ public class Calculator {
     }
 
     //EFFECTS: Calculates the users daily allotted calories to achieve goal in timeframe set by user. Throw invalid
-    //         person exception if person has invalid fields.
+    //         person exception if person has goal days, goal weight or start weight <= 0.
     public Double calcDailyCal(Person p) throws InvalidPersonException {
         if (p.getGoalDays() <= 0 || p.getGoalWeight() <= 0 || p.getStartWeight() <= 0) {
             throw new InvalidPersonException();
@@ -121,7 +121,7 @@ public class Calculator {
     }
 
     //EFFECTS: returns string that is the recommendation for users diet
-    //         if given mass = 0 then throw InvalidMassException
+    //         if given total mass = 0 then throw InvalidMassException
     private String makeRecommendDiet(double grainsMass, double proteinMass, double vegAndFruitMass, double othersMass,
                                      double total) throws InvalidMassException {
         if (total == 0) {
